@@ -1,8 +1,8 @@
 #include "Gl.h"
 #include <GL/gl.h>
 #include <GL/glu.h>
-#include "Log/Log.h"
 #include <iostream>
+#include "Logging/Logging.h"
 
 namespace Lavender
 {
