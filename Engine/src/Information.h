@@ -1,11 +1,16 @@
 #pragma once
+#include <memory>
 #include "Idea.h"
 
-class Information
+namespace Lavender
 {
-private:
-	Idea* m_idea;
+	class Information
+	{
+	private:
+		std::weak_ptr<Idea> m_Idea;
 
-public:
-	Information();
-};
+	public:
+		Information() = delete;
+		Information(std::shared_ptr<Idea> idea);
+	};
+}

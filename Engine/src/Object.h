@@ -1,12 +1,20 @@
 #pragma once
+#include <memory>
+#include <vector>
 #include "Information.h"
 
-class Object
+namespace Lavender
 {
-private:
-	Information* m_info;
+	// Entity in REAL layer. Has children that build a hiearachy
+	class Object
+	{
+	private:
+		std::weak_ptr<Information> m_Info;
+		std::vector<std::unique_ptr<Object>> m_Children;
 
-public:
-	Object();
-};
+	public:
+		Object(std::shared_ptr<Information> info);
+	};
+}
+
 

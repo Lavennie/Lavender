@@ -151,7 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="RealLayer.cpp" />
+    <ClCompile Include="src\RealLayer.cpp" />
     <ClCompile Include="src\LayerInformation.cpp" />
     <ClCompile Include="src\LayerIdea.cpp" />
     <ClCompile Include="src\Object.cpp" />
@@ -164,7 +164,7 @@
     <ClCompile Include="src\World.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="RealLayer.h" />
+    <ClInclude Include="src\RealLayer.h" />
     <ClInclude Include="src\LayerInformation.h" />
     <ClInclude Include="src\LayerIdea.h" />
     <ClInclude Include="src\Object.h" />

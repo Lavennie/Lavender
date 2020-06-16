@@ -1,6 +1,8 @@
 #include "Object.h"
 
-Object::Object()
+namespace Lavender
 {
-	m_info = nullptr;
+	Object::Object(std::shared_ptr<Information> info) : m_Info(info), m_Children(std::vector<std::unique_ptr<Object>>())
+	{
+	}
 }

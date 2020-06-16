@@ -1,6 +1,6 @@
 #include "Information.h"
 
-Information::Information()
+namespace Lavender
 {
-	m_idea = nullptr;
+	Information::Information(std::shared_ptr<Idea> idea) : m_Idea(idea) { }
 }

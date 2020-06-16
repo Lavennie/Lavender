@@ -1,6 +1,9 @@
 #include "Rendering/Gl.h"
+#include <iostream>
+#include <memory>
 
 using namespace Lavender;
+
 
 int main()
 {

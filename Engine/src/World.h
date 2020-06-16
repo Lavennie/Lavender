@@ -1,4 +1,5 @@
 #pragma once
+#include <memory>
 #include "Object.h"
 #include "Information.h"
 #include "Idea.h"
@@ -9,10 +10,9 @@ namespace Lavender
 	class World
 	{
 	private:
-		LayerIdea* m_IdeaLayer;
+		std::shared_ptr<LayerIdea> m_IdeaLayer;
 	public:
-		World();
-		~World();
+		World(std::shared_ptr<LayerIdea> ideaLayer);
 
 		void Update();
 		void Render();

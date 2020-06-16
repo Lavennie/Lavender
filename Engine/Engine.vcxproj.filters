@@ -45,7 +45,7 @@
     <ClCompile Include="src\LayerInformation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RealLayer.cpp">
+    <ClCompile Include="src\RealLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -80,7 +80,7 @@
     <ClInclude Include="src\LayerInformation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="RealLayer.h">
+    <ClInclude Include="src\RealLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

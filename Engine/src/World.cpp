@@ -2,16 +2,7 @@
 
 namespace Lavender
 {
-	World::World() : m_Physical(new Dimension<Object>), m_Information(new Dimension<Information>), m_Idea(new Dimension<Idea>)
-	{
-
-	}
-	World::~World()
-	{
-		delete m_Physical;
-		delete m_Information;
-		delete m_Idea;
-	}
+	World::World(std::shared_ptr<LayerIdea> ideaLayer) : m_IdeaLayer(ideaLayer) { }
 
 	void World::Update()
 	{
