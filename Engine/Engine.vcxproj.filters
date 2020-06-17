@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="src\Magic\RockExample.cpp" />
+    <ClCompile Include="src\RealLayer.cpp" />
+    <ClCompile Include="src\LayerInformation.cpp" />
+    <ClCompile Include="src\LayerIdea.cpp" />
+    <ClCompile Include="src\Object.cpp" />
+    <ClCompile Include="src\Rendering\Gl.cpp" />
+    <ClCompile Include="src\Math\Color.cpp" />
+    <ClCompile Include="src\Information.cpp" />
+    <ClCompile Include="src\Idea.cpp" />
+    <ClCompile Include="src\Math\Vector3.cpp" />
+    <ClCompile Include="src\World.cpp" />
+    <ClCompile Include="src\Logging\Logging.cpp" />
+    <ClCompile Include="src\Magic\TempComponents.cpp" />
+    <ClCompile Include="src\Magic\Transform.cpp" />
+    <ClCompile Include="src\Magic\TempSceneObject.cpp" />
+    <ClCompile Include="src\Magic\DataEngine.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Magic\RockExample.h" />
+    <ClInclude Include="src\RealLayer.h" />
+    <ClInclude Include="src\LayerInformation.h" />
+    <ClInclude Include="src\LayerIdea.h" />
+    <ClInclude Include="src\Object.h" />
+    <ClInclude Include="src\Rendering\Gl.h" />
+    <ClInclude Include="src\Math\Color.h" />
+    <ClInclude Include="src\Information.h" />
+    <ClInclude Include="src\Idea.h" />
+    <ClInclude Include="src\Math\Vector3.h" />
+    <ClInclude Include="src\World.h" />
+    <ClInclude Include="src\Logging\Logging.h" />
+    <ClInclude Include="src\Magic\TempComponents.h" />
+    <ClInclude Include="src\Magic\Transform.h" />
+    <ClInclude Include="src\Magic\TempSceneObject.h" />
+    <ClInclude Include="src\Magic\DataEngine.h" />
+    <ClInclude Include="src\Magic\MagicHeader.h" />
+  </ItemGroup>
+</Project>
