@@ -1,5 +1,6 @@
 #pragma once
-#include <Magic\AutoPackObject.h>
+#include "Magic/AutoPackObject.h"
+
 // todo
 static class Scene {
 public:
@@ -8,8 +9,8 @@ public:
 	}
 };
 
-class SceneData :AutoPackObj {
-	AutoPackObj objects[];
+class SceneData  {
+	AutoPackObj objectsScene[];
 };
 
 

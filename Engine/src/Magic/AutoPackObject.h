@@ -1,5 +1,6 @@
 #pragma once
-#include <Magic\VariablePack.h>
+#include "Magic/VariablePack.h"
+#include "Magic/Scene/Scene.h"
 
 class AutoPackObj {
 protected:

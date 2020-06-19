@@ -1,6 +1,7 @@
 #include "Rendering/Gl.h"
 #include <iostream>
 #include <memory>
+#include <Tests\TestingEnv.h>
 
 using namespace Lavender;
 
@@ -12,6 +13,10 @@ int main()
 	{
 		return -1;
 	}
+
+	// create and run tests
+	// TestingEnv::TestingEnv();
+	// .
 
 	MSG msg;
 	PeekMessage(&msg, NULL, 0, 0, PM_REMOVE);

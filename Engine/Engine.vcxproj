@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -150,7 +150,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Magic\DataEngine.cpp" />
+    <ClCompile Include="src\FileSystem\FileHelper.cpp" />
+    <ClCompile Include="src\FileSystem\FileSystemUseExample.cpp" />
+    <ClCompile Include="src\Magic\Scene\Scene.cpp" />
+    <ClCompile Include="src\Magic\AutoPackObject.cpp" />
     <ClCompile Include="src\Logging\Logging.cpp" />
     <ClCompile Include="src\Magic\RockExample.cpp" />
     <ClCompile Include="src\RealLayer.cpp" />
@@ -164,11 +167,18 @@
     <ClCompile Include="src\Math\Vector3.cpp" />
     <ClCompile Include="src\World.cpp" />
     <ClCompile Include="src\Magic\TempComponents.cpp" />
-    <ClCompile Include="src\Magic\Transform.cpp" />
+    <ClCompile Include="src\Magic\Variables\Transform.cpp" />
     <ClCompile Include="src\Magic\TempSceneObject.cpp" />
+    <ClCompile Include="src\Magic\Variable.cpp" />
+    <ClCompile Include="src\Magic\Variables\VarFloat.cpp" />
+    <ClCompile Include="src\Magic\Variables\VarBool.cpp" />
+    <ClCompile Include="src\Magic\Variables\Vector.cpp" />
+    <ClCompile Include="src\Magic\VariablePack.cpp" />
+    <ClCompile Include="src\Magic\VariableType.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Magic\DataEngine.h" />
+    <ClInclude Include="src\Magic\Scene\Scene.h" />
+    <ClInclude Include="src\Magic\AutoPackObject.h" />
     <ClInclude Include="src\Logging\Logging.h" />
     <ClInclude Include="src\Magic\MagicHeader.h" />
     <ClInclude Include="src\Magic\RockExample.h" />
@@ -181,10 +191,17 @@
     <ClInclude Include="src\Information.h" />
     <ClInclude Include="src\Idea.h" />
     <ClInclude Include="src\Math\Vector3.h" />
+    <ClInclude Include="src\Tests\TestingEnv.h" />
     <ClInclude Include="src\World.h" />
     <ClInclude Include="src\Magic\TempComponents.h" />
-    <ClInclude Include="src\Magic\Transform.h" />
+    <ClInclude Include="src\Magic\Variables\Transform.h" />
     <ClInclude Include="src\Magic\TempSceneObject.h" />
+    <ClInclude Include="src\Magic\Variable.h" />
+    <ClInclude Include="src\Magic\Variables\VarFloat.h" />
+    <ClInclude Include="src\Magic\Variables\VarBool.h" />
+    <ClInclude Include="src\Magic\Variables\Vector.h" />
+    <ClInclude Include="src\Magic\VariablePack.h" />
+    <ClInclude Include="src\Magic\VariableType.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

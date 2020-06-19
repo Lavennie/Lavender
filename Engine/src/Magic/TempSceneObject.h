@@ -1,6 +1,6 @@
 #pragma once
-#include <list>
-#include <Magic/MagicHeader.h>
+#include "list"
+#include "Magic/MagicHeader.h"
 
 
 class TempSceneObject {

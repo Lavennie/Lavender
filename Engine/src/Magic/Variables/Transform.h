@@ -1,5 +1,5 @@
 #pragma once
-#include "TempComponents.h"
+#include "Magic/TempComponents.h"
 
 class Transform :public TempComponents {
 

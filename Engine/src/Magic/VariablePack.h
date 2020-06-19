@@ -2,11 +2,13 @@
 #include <Magic\Variable.h>
 #include "VariableType.h"
 #include <list>
+#include <map>
+using namespace std;
 
 class VariablePack {
 protected:
 
-	std::map<VariableType, Variable> variables;
+	map<VariableType, Variable> variables;
 public:
 
 	void addData(VariableType type, Variable value) {
