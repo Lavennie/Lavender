@@ -2,15 +2,14 @@
 #include "Magic/AutoPackObject.h"
 
 // todo
-static class Scene {
+class Scene {
 public:
 	static void Register(AutoPackObj* obj) {
 
 	}
-};
 
-class SceneData  {
-	AutoPackObj objectsScene[];
-};
+	class SceneData {
+	};
 
+};
 

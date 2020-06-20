@@ -65,11 +65,4 @@ public:
 		cout << "Test done. Fails: " << failTest;
 	}
 };
-
-FileHelper::FileHelper()
-{
-}
-
-FileHelper::~FileHelper()
-{
-}*/
+*/

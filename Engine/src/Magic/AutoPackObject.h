@@ -1,17 +1,29 @@
 #pragma once
 #include "Magic/VariablePack.h"
-#include "Magic/Scene/Scene.h"
+#include "vector"
 
 class AutoPackObj {
-protected:
-	VariablePack var;
+
+
+
+public:
+	static vector<AutoPackObj*> allObjects;
 
 	AutoPackObj()
 	{
 		var = VariablePack();
-
-		Scene::Register(this);
+		AutoPackObj::allObjects.push_back(this);
 	}
+
+	~AutoPackObj() {
+		// Empty all object on closing game.
+		// !Might pop incorrect item when destroyed.
+		AutoPackObj::allObjects.pop_back();
+	}
+protected:
+	VariablePack var;
+
+	
 	void Move() {
 
 	}

@@ -1,8 +1,8 @@
 #pragma once
-#include <Magic\Variable.h>
-#include "VariableType.h"
-#include <list>
-#include <map>
+#include "Magic/Variable.h"
+#include "Magic/VariableType.h"
+#include "list"
+#include "map"
 using namespace std;
 
 class VariablePack {

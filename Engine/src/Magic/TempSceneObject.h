@@ -6,8 +6,8 @@
 class TempSceneObject {
 	std::list<TempSceneObject> components;
 
-public:
+/*public:
 	void Add(Transform transform) {
 
-	}
+	}*/
 };

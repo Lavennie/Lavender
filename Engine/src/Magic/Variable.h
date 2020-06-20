@@ -6,11 +6,11 @@ class Variable {
 public:
 	template<typename T>
 	void setValue(T val) {
-		this->value = val;
+		this->value = &val;
 	}
 	template<typename T>
-	T getValue(T val) {
-		this->value = val;
+	T getValue() {
+		return (T)this->*value;
 	}
 };
 
