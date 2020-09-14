@@ -3,6 +3,7 @@
 
 namespace Lavender
 {
+
 	Log::Level Log::level = Log::LevelInfo;
 	time_t Log::m_StartTime = time(0);
 

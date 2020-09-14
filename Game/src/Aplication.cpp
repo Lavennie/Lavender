@@ -6,7 +6,6 @@
 #include "Rendering/Shader.h"
 #include "Rendering/VertexAttribPointer.h"
 
-
 using namespace Lavender;
 
 
@@ -23,6 +22,10 @@ int main()
 	{
 		return -1;
 	}
+	
+	MSG msg;
+	PeekMessage(&msg, NULL, 0, 0, PM_REMOVE);
+	while (msg.message != WM_QUIT)
 	{
 		// init opengl settings
 		glEnable(GL_BLEND);
