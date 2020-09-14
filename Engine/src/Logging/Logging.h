@@ -18,7 +18,11 @@ namespace Lavender
 		Log() = delete;
 
 		static void PrintInfo(const String& msg);
+		static void PrintInfo(const char* msg);
 		static void PrintWarning(const String& msg);
+		static void PrintWarning(const char* msg);
 		static void PrintError(const String& msg);
+		static void PrintError(const char* msg);
+
 	};
 }

@@ -96,7 +96,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Engine/src/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Engine/src/;$(SolutionDir)Dependencies/</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -109,7 +109,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Engine/src/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Engine/src/;$(SolutionDir)Dependencies/</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -124,7 +124,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Engine/src/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Engine/src/;$(SolutionDir)Dependencies/</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -141,7 +141,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Engine/src/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Engine/src/;$(SolutionDir)Dependencies/</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -151,12 +151,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Rendering\Shader.cpp" />
+    <ClCompile Include="src\Math\Quaternion.cpp" />
+    <ClCompile Include="src\Math\Matrix4.cpp" />
     <ClCompile Include="src\Rendering\Mesh.cpp" />
-    <ClCompile Include="src\RealLayer.cpp" />
+    <ClCompile Include="src\LayerReal.cpp" />
     <ClCompile Include="src\LayerInformation.cpp" />
     <ClCompile Include="src\LayerIdea.cpp" />
     <ClCompile Include="src\Object.cpp" />
-    <ClCompile Include="src\Log\Logging.cpp" />
+    <ClCompile Include="src\Logging\Logging.cpp" />
     <ClCompile Include="src\Rendering\Gl.cpp" />
     <ClCompile Include="src\Math\Color.cpp" />
     <ClCompile Include="src\Information.cpp" />
@@ -164,14 +167,19 @@
     <ClCompile Include="src\Math\Vector3.cpp" />
     <ClCompile Include="src\World.cpp" />
     <ClCompile Include="src\Rendering\Vertex.cpp" />
+    <ClCompile Include="src\Rendering\VertexAttribPointer.cpp" />
+    <ClCompile Include="src\Math\Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Rendering\Shader.h" />
+    <ClInclude Include="src\Math\Quaternion.h" />
+    <ClInclude Include="src\Math\Matrix4.h" />
     <ClInclude Include="src\Rendering\Mesh.h" />
-    <ClInclude Include="src\RealLayer.h" />
+    <ClInclude Include="src\LayerReal.h" />
     <ClInclude Include="src\LayerInformation.h" />
     <ClInclude Include="src\LayerIdea.h" />
     <ClInclude Include="src\Object.h" />
-    <ClInclude Include="src\Log\Logging.h" />
+    <ClInclude Include="src\Logging\Logging.h" />
     <ClInclude Include="src\Rendering\Gl.h" />
     <ClInclude Include="src\Math\Color.h" />
     <ClInclude Include="src\Information.h" />
@@ -179,6 +187,8 @@
     <ClInclude Include="src\Math\Vector3.h" />
     <ClInclude Include="src\World.h" />
     <ClInclude Include="src\Rendering\Vertex.h" />
+    <ClInclude Include="src\Rendering\VertexAttribPointer.h" />
+    <ClInclude Include="src\Math\Vector2.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

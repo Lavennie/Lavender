@@ -4,11 +4,11 @@
 
 namespace Lavender
 {
-	class RealLayer
+	class LayerReal
 	{
 	private:
 		std::unique_ptr<Object> m_Root;
 	public:
-		RealLayer();
+		LayerReal();
 	};
 }

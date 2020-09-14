@@ -22,6 +22,7 @@ namespace Lavender
 		{
 			DestroyWindow(m_Hwnd);
 		}
+		Log::PrintInfo("Deleted opengl context and window");
 	}
 
 	bool Gl::InitWindow(const char* title)
@@ -70,7 +71,7 @@ namespace Lavender
 		memset(&pfd, 0, sizeof(pfd));
 		pfd.nSize = sizeof(pfd);
 		pfd.nVersion = 1;
-		pfd.dwFlags = PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL;
+		pfd.dwFlags = PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER;
 		pfd.iPixelType = PFD_TYPE_RGBA;
 		pfd.cColorBits = 32;
 
@@ -98,6 +99,19 @@ namespace Lavender
 	bool Gl::HasWindow() const
 	{
 		return m_HasWindow;
+	}
+
+	void Gl::Clear() const
+	{
+		glClear(GL_COLOR_BUFFER_BIT |GL_DEPTH_BUFFER_BIT);
+	}
+	void Gl::ClearColor(const Color& color) const
+	{
+		glClearColor(color.r, color.g, color.b, 1.0f);
+	}
+	void Gl::SwapBuffer() const
+	{
+		SwapBuffers(m_Hdc);
 	}
 
 	LRESULT CALLBACK Gl::WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)

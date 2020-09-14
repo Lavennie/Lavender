@@ -2,7 +2,11 @@
 
 namespace Lavender
 {
-	World::World(std::shared_ptr<LayerIdea> ideaLayer) : m_IdeaLayer(ideaLayer) { }
+	World::World() : 
+		m_IdeaLayer(std::make_unique<LayerIdea>(10)), 
+		m_InfoLayer(std::make_unique<LayerInformation>(10)), 
+		m_RealLayer(std::make_unique<LayerReal>())
+	{ }
 
 	void World::Update()
 	{

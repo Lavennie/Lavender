@@ -1,5 +1,6 @@
 #pragma once
 #include <windows.h>
+#include "Math/Color.h"
 
 namespace Lavender
 {
@@ -17,6 +18,10 @@ namespace Lavender
 		bool InitWindow(const char* title);
 
 		bool HasWindow() const;
+
+		void Clear() const;
+		void ClearColor(const Color& color) const;
+		void SwapBuffer() const;
 	private:
 		static LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 	};

@@ -13,6 +13,13 @@ namespace Lavender
 			std::cout << "[" << difftime(time(0), m_StartTime) << "] " << msg << std::endl;
 		}
 	}
+	void Log::PrintInfo(const char* msg)
+	{
+		if (Log::level >= LevelInfo)
+		{
+			std::cout << "[" << difftime(time(0), m_StartTime) << "] " << msg << std::endl;
+		}
+	}
 	void Log::PrintWarning(const String& msg)
 	{
 		if (Log::level >= LevelWarning)
@@ -20,7 +27,21 @@ namespace Lavender
 			std::cout << "\033[93m" << "[" << difftime(time(0), m_StartTime) << "] " << msg << "\033[0m" << std::endl;
 		}
 	}
+	void Log::PrintWarning(const char* msg)
+	{
+		if (Log::level >= LevelWarning)
+		{
+			std::cout << "\033[93m" << "[" << difftime(time(0), m_StartTime) << "] " << msg << "\033[0m" << std::endl;
+		}
+	}
 	void Log::PrintError(const String& msg)
+	{
+		if (Log::level >= LevelError)
+		{
+			std::cout << "\033[91m" << "[" << difftime(time(0), m_StartTime) << "] " << msg << "\033[0m" << std::endl;
+		}
+	}
+	void Log::PrintError(const char* msg)
 	{
 		if (Log::level >= LevelError)
 		{
