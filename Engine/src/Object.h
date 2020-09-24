@@ -11,6 +11,7 @@ namespace Lavender
 	private:
 		std::weak_ptr<Information> m_Info;
 		std::vector<std::unique_ptr<Object>> m_Children;
+		std::vector<std::unique_ptr<Component>> m_Components;
 
 	public:
 		Object(std::shared_ptr<Information> info);

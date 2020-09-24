@@ -6,10 +6,11 @@
 
 namespace Lavender
 {
-	Gl::Gl() : m_Hwnd(NULL), m_Hdc(NULL), m_Hrc(NULL), m_HasWindow(false) { }
+	Gl::Gl() : m_Hwnd(NULL), m_Hdc(NULL), m_Hrc(NULL), m_HasWindow(false), m_Input(std::make_unique<Input>()) { }
 	Gl::~Gl()
 	{
 		wglMakeCurrent(NULL, NULL);
+		RemoveProp(m_Hwnd, (LPCWSTR)L"MyWindow");
 		if (m_Hdc != NULL)
 		{
 			ReleaseDC(m_Hwnd, m_Hdc);
@@ -92,6 +93,8 @@ namespace Lavender
 
 		ShowWindow(m_Hwnd, SW_SHOWNORMAL);
 
+		SetProp(m_Hwnd, (LPCWSTR)L"MyWindow", (HANDLE)this);
+
 		m_HasWindow = true;
 		return true;
 	}
@@ -114,15 +117,40 @@ namespace Lavender
 		SwapBuffers(m_Hdc);
 	}
 
+	Input* Gl::GetInput() const
+	{
+		return m_Input.get();
+	}
+
 	LRESULT CALLBACK Gl::WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	{
 		switch (msg)
 		{
-		case WM_DESTROY:
-			PostQuitMessage(0);
-		default:
-			break;
+		case WM_KEYDOWN:
+		{
+			Gl* window = (Gl*)GetProp(hwnd, (LPCWSTR)L"MyWindow");
+			if (window != nullptr)
+			{
+				window->m_Input->RegisterKeyDown(wParam);
+			}
+			return 0;
 		}
-		return DefWindowProc(hwnd, msg, wParam, lParam);
+		case WM_KEYUP:
+		{
+			Gl* window = (Gl*)GetProp(hwnd, (LPCWSTR)L"MyWindow");
+			if (window != nullptr)
+			{
+				window->m_Input->RegisterKeyUp(wParam);
+			}
+			return 0;
+		}
+		case WM_DESTROY:
+		{
+			PostQuitMessage(0);
+			return 0;
+		}
+		default:
+			return DefWindowProc(hwnd, msg, wParam, lParam);
+		}
 	}
 }

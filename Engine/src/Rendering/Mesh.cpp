@@ -54,65 +54,8 @@ namespace Lavender
 			return;
 		}
 
-
-		/*file.read((char*)&count, 1);  // attribute count
-		unique_ptr<VertexAttribPointer[]> attribs = make_unique<VertexAttribPointer[]>(count);
-		for (size_t i = 0; i < count; i++)
-		{
-			unsigned char attrib;
-			file.read((char*)&attrib, 1);
-
-			attribs[i].index = i;
-			attribs[i].offset = (void*)offset;
-			// low bits
-			attribs[i].size = attrib & 0x0f;
-			// high bits
-			switch ((attrib >> 4) & 0x0f)
-			{
-			case 0:
-				attribs[i].type = GL_BYTE;
-				offset += attribs[i].size;
-				break;
-			case 1:
-				attribs[i].type = GL_UNSIGNED_BYTE;
-				offset += attribs[i].size;
-				break;
-			case 2:
-				attribs[i].type = GL_SHORT;
-				offset += 2 * attribs[i].size;
-				break;
-			case 3:
-				attribs[i].type = GL_UNSIGNED_SHORT;
-				offset += 2 * attribs[i].size;
-				break;
-			case 4:
-				attribs[i].type = GL_INT;
-				offset += 4 * attribs[i].size;
-				break;
-			case 5:
-				attribs[i].type = GL_UNSIGNED_INT;
-				offset += 4 * attribs[i].size;
-				break;
-			case 6:
-				attribs[i].type = GL_FLOAT;
-				offset += 4 * attribs[i].size;
-				break;
-			case 7:
-				attribs[i].type = GL_DOUBLE;
-				offset += 4 * attribs[i].size;
-				break;
-			default:
-				return;
-			}
-			attribs[i].normalized = GL_FALSE;
-			attribs[i].stride = sizeof(Vertex);
-		}*/
-
-		//unsigned int offset = 0;
-
 		unsigned char vertexCount;
 		file.read((char*)&vertexCount, 1);
-		std::cout << "vertex count " << (int)vertexCount << std::endl;
 		Vertex* vertices = new Vertex[vertexCount];
 		for (size_t i = 0; i < vertexCount; i++)
 		{
@@ -126,21 +69,15 @@ namespace Lavender
 			file.read((char*)&vertices[i].normal.x, 4);
 			file.read((char*)&vertices[i].normal.y, 4);
 			file.read((char*)&vertices[i].normal.z, 4);
-
-			std::cout << vertices[i].position.x << ", " << vertices[i].position.y << ", " << 
-				vertices[i].texCoord.x << ", " << vertices[i].texCoord.y << ", " << 
-				vertices[i].position.z << ", " << vertices[i].normal.x << ", " << vertices[i].normal.y << ", " << vertices[i].normal.z << std::endl;
 		}
 
 		unsigned char indexCount;
 		file.read((char*)&indexCount, 1);
 		indexCount *= 3;
-		std::cout << "index count " << (int)indexCount << std::endl;
 		unsigned int* indices = new unsigned int[indexCount];
 		for (size_t i = 0; i < indexCount; i++)
 		{
 			file.read((char*)&indices[i], 4);
-			std::cout << indices[i] << std::endl;
 		}
 
 		file.close();

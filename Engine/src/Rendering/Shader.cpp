@@ -70,7 +70,6 @@ namespace Lavender
 		// save uniform locations
 		GLint count;
 		((PFNGLGETPROGRAMIVPROC)wglGetProcAddress("glGetProgramiv"))(m_Id, GL_ACTIVE_UNIFORMS, &count);
-		Log::PrintInfo((char*)&count);
 
 		GLsizei length;
 		GLint size;
