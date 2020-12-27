@@ -54,8 +54,8 @@ namespace Lavender
 			return;
 		}
 
-		unsigned char vertexCount;
-		file.read((char*)&vertexCount, 1);
+		UINT64 vertexCount;
+		file.read((char*)&vertexCount, 8);
 		Vertex* vertices = new Vertex[vertexCount];
 		for (size_t i = 0; i < vertexCount; i++)
 		{
@@ -71,8 +71,8 @@ namespace Lavender
 			file.read((char*)&vertices[i].normal.z, 4);
 		}
 
-		unsigned char indexCount;
-		file.read((char*)&indexCount, 1);
+		UINT64 indexCount;
+		file.read((char*)&indexCount, 8);
 		indexCount *= 3;
 		unsigned int* indices = new unsigned int[indexCount];
 		for (size_t i = 0; i < indexCount; i++)

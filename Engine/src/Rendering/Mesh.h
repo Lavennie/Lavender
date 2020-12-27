@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 #include "Vertex.h"
 #include "Rendering/VertexAttribPointer.h"
 

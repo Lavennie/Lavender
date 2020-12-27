@@ -1,14 +1,23 @@
 #pragma once
+#include <vector>
 #include <memory>
-#include "Object.h"
+#include "Real.h"
 
 namespace Lavender
 {
+	using namespace std;
+
 	class LayerReal
 	{
 	private:
-		std::unique_ptr<Object> m_Root;
+		vector<unique_ptr<Real>> m_Root;
+
+	private:
+		LayerReal(const LayerReal&) = delete;
+		LayerReal& operator=(const LayerReal&) = delete;
 	public:
 		LayerReal();
+
+		Real* AddNewRoot(const Info* info);
 	};
 }

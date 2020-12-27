@@ -2,39 +2,22 @@
 
 namespace Lavender
 {
-	Idea::Idea() : m_color(Color::White), m_size(Size::Medium), m_age(Age::Normal), m_opacity(Opacity::Opaque) { }
+	Idea::Idea() : m_Properties() { }
+	Idea::Idea(const void* nothing) : Idea() { }
 
-	Idea::Color Idea::GetColor() const
+	const Property* Idea::GetProperty(Property::Type type) const
 	{
-		return m_color;
+		for (const Property& prop : m_Properties)
+		{
+			if (prop.GetType() == type)
+			{
+				return &prop;
+			}
+		}
+		return nullptr;
 	}
-	Idea::Size Idea::GetSize() const
+	void Idea::AddProperty(Property::Type type, void* value)
 	{
-		return m_size;
-	}
-	Idea::Age Idea::GetAge() const
-	{
-		return m_age;
-	}
-	Idea::Opacity Idea::GetOpacity() const
-	{
-		return m_opacity;
-	}
-
-	void Idea::SetColor(Idea::Color color)
-	{
-		m_color = color;
-	}
-	void Idea::SetSize(Idea::Size size)
-	{
-		m_size = size;
-	}
-	void Idea::SetAge(Idea::Age age)
-	{
-		m_age = age;
-	}
-	void Idea::SetOpacity(Idea::Opacity opacity)
-	{
-		m_opacity = opacity;
+		m_Properties.emplace_back(type, value);
 	}
 }

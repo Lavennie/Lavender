@@ -16,6 +16,7 @@ namespace Lavender
 	public:
 		Matrix4();
 		Matrix4(const float src[16]);
+		// Values are stored column-major order
 		Matrix4(float m00, float m01, float m02, float m03, // 1st column
 			float m04, float m05, float m06, float m07, // 2nd column
 			float m08, float m09, float m10, float m11, // 3rd column
@@ -43,6 +44,9 @@ namespace Lavender
 		static Matrix4 InitRotation(const Vector3& euler);
 		static Matrix4 InitRotation(const Vector3& forward, const Vector3& right, const Vector3& up);
 		static Matrix4 InitScale(const Vector3& scale);
+		// Field of view is in radians
+		static Matrix4 InitPerspectiveProjection(float fov, float ar, float zNear, float zFar);
+		static Matrix4 InitPerspectiveProjection(float left, float right, float top, float bottom, float zNear, float zFar);
 
 		Matrix4& Translate(float x, float y, float z);   // translation by (x,y,z)
 		Matrix4& Translate(const Vector3& v);            //

@@ -3,5 +3,7 @@ namespace Lavender
 {
 	class Component
 	{
+	public:
+		Component();
 	};
 }

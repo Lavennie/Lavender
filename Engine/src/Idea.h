@@ -1,31 +1,22 @@
 #pragma once
+#include <vector>
+#include "Property.h"
+
 namespace Lavender
 {
+	using namespace std;
+
 	class Idea
 	{
-	public:
-		enum class Color : char { White, Yellow, Orange, Red, Pink, Purple, Blue, Green, Brown, Grey, Black };
-		enum class Size : char { Tiny, Small, Medium, Big, Large };
-		enum class Age : char { Young, Normal, Old };
-		enum class Opacity : char { Transparent, SemiTransparent, Opaque };
-
-	private:
-		Color m_color;
-		Size m_size;
-		Age m_age;
-		Opacity m_opacity;
+		friend class SubIdea;
+		friend class Info;
+	protected:
+		vector<Property> m_Properties;
 
 	public:
 		Idea();
-
-		Color GetColor() const;
-		Size GetSize() const;
-		Age GetAge() const;
-		Opacity GetOpacity() const;
-
-		void SetColor(Color color);
-		void SetSize(Size size);
-		void SetAge(Age age);
-		void SetOpacity(Opacity opacity);
+		Idea(const void* nothing);
+		virtual const Property* GetProperty(Property::Type type) const;
+		void AddProperty(Property::Type type, void* value);
 	};
 }

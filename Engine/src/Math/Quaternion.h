@@ -29,6 +29,7 @@ namespace Lavender
 		static Quaternion FromTo(const Quaternion& from, const Quaternion& to);
 
 		Quaternion operator*(const float a) const;
+		Vector3 operator*(const Vector3& other) const;
 		Quaternion operator*(const Quaternion& other) const;
 		Quaternion& operator*=(const float a);
 		Quaternion& operator*=(const Quaternion& other);

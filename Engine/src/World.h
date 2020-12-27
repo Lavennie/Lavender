@@ -1,26 +1,39 @@
 #pragma once
 #include <memory>
-#include "Object.h"
-#include "Information.h"
-#include "Idea.h"
-#include "LayerIdea.h"
-#include "LayerInformation.h"
+#include "LayerConcept.h"
 #include "LayerReal.h"
+#include "Rendering/Camera.h"
+#include "Input/Input.h"
 
 namespace Lavender
 {
+	using namespace std;
+
 	class World
 	{
 	private:
-		std::unique_ptr<LayerIdea> m_IdeaLayer;
-		std::unique_ptr<LayerInformation> m_InfoLayer;
-		std::unique_ptr<LayerReal> m_RealLayer;
+		Camera m_Camera;
+		LayerConcept<Idea> m_IdeaLayer;
+		LayerConcept<SubIdea> m_SubIdeaLayer;
+		LayerConcept<Info> m_InfoLayer;
+		LayerReal m_RealLayer;
+	private:
+		World(const World&) = delete;
+		World& operator=(const World&) = delete;
 	public:
 		World();
 
-		void Update();
+		void Update(const Input& input);
 		void Render();
 		void UpdateSound();
+
+		Idea& InitIdea();
+		SubIdea& InitSubIdea(const Idea& idea);
+		Info& InitInfo(const Idea& idea);
+		Real& InitRealRoot(const Info& info);
+
+		Camera* GetCamera();
+		const Matrix4& GetProjectionMatrix() const;
 	};
 }
 

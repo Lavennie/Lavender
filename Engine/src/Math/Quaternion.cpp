@@ -9,12 +9,12 @@ namespace Lavender
 	Quaternion::Quaternion(const Vector3& v, float w) : v(v), w(w) {}
 	Quaternion::Quaternion(float eulerX, float eulerY, float eulerZ) 
 	{
-		double c1 = cos(eulerY / 2.0f);
-		double s1 = sin(eulerY / 2.0f);
-		double c2 = cos(eulerX / 2.0f);
-		double s2 = sin(eulerX / 2.0f);
-		double c3 = cos(eulerZ / 2.0f);
-		double s3 = sin(eulerZ / 2.0f);
+		double c1 = cos((eulerY * (M_PI / 180.0f)) / 2.0f);
+		double s1 = sin((eulerY * (M_PI / 180.0f)) / 2.0f);
+		double c2 = cos((eulerX * (M_PI / 180.0f)) / 2.0f);
+		double s2 = sin((eulerX * (M_PI / 180.0f)) / 2.0f);
+		double c3 = cos((eulerZ * (M_PI / 180.0f)) / 2.0f);
+		double s3 = sin((eulerZ * (M_PI / 180.0f)) / 2.0f);
 		w = c1 * c2 * c3 - s1 * s2 * s3;
 		v = Vector3(
 			c1 * c2 * s3 + s1 * s2 * c3,
@@ -160,6 +160,10 @@ namespace Lavender
 	Quaternion Quaternion::operator*(const float a) const
 	{
 		return Quaternion(v.x * a, v.y * a, v.z * a, w * a);
+	}
+	Vector3 Quaternion::operator*(const Vector3& other) const
+	{
+		return (*this * Quaternion(other, 0) * Conjugate(*this)).v;
 	}
 	Quaternion Quaternion::operator*(const Quaternion& other) const
 	{

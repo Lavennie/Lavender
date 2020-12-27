@@ -164,6 +164,22 @@ namespace Lavender
 			0,		 0,		  scale.z, 0,
 			0,		 0,		  0,	   1);
 	}
+	Matrix4 Matrix4::InitPerspectiveProjection(float fov, float ar, float zNear, float zFar) 
+	{
+		return Matrix4(
+			1.0f / (ar * tan(fov / 2.0f)), 0,					   0,									   0,
+			0,							   1.0f / tan(fov / 2.0f), 0,									   0,
+			0,							   0,					   (-zFar - zNear) / (zNear - zFar),	   1.0f,
+			0,							   0,					   (2.0f * zFar * zNear) / (zNear - zFar), 0);
+	}
+	Matrix4 Matrix4::InitPerspectiveProjection(float left, float right, float top, float bottom, float zNear, float zFar)
+	{
+		return Matrix4(
+			(2.0f * zNear) / (right - left), 0,								  (right + left) / (right - left),	0,
+			0,								 (2.0f * zNear) / (top - bottom), (top + bottom) / (top - bottom),	0,
+			0,								 0,								  -(zFar + zNear) / (zFar - zNear), (-2.0f * zFar * zNear) / (zFar - zNear),
+			0,								 0,								  -1.0f,							0);
+	}
 
 	Matrix4& Matrix4::Translate(float x, float y, float z)
 	{
@@ -395,16 +411,24 @@ namespace Lavender
 	}
 	Vector3 Matrix4::operator*(const Vector3& rhs) const
 	{
-		return Vector3(m[0] * rhs.x + m[4] * rhs.y + m[8] * rhs.z + m[12],
-			m[1] * rhs.x + m[5] * rhs.y + m[9] * rhs.z + m[13],
-			m[2] * rhs.x + m[6] * rhs.y + m[10] * rhs.z + m[14]);
+		return Vector3(m[0] * rhs.x + m[1] * rhs.y + m[2] * rhs.z + m[3],
+			m[4] * rhs.x + m[5] * rhs.y + m[6] * rhs.z + m[7],
+			m[8] * rhs.x + m[9] * rhs.y + m[10] * rhs.z + m[11]);
 	}
 	Matrix4 Matrix4::operator*(const Matrix4& n) const
 	{
-		return Matrix4(m[0] * n[0] + m[4] * n[1] + m[8] * n[2] + m[12] * n[3], m[1] * n[0] + m[5] * n[1] + m[9] * n[2] + m[13] * n[3], m[2] * n[0] + m[6] * n[1] + m[10] * n[2] + m[14] * n[3], m[3] * n[0] + m[7] * n[1] + m[11] * n[2] + m[15] * n[3],
-			m[0] * n[4] + m[4] * n[5] + m[8] * n[6] + m[12] * n[7], m[1] * n[4] + m[5] * n[5] + m[9] * n[6] + m[13] * n[7], m[2] * n[4] + m[6] * n[5] + m[10] * n[6] + m[14] * n[7], m[3] * n[4] + m[7] * n[5] + m[11] * n[6] + m[15] * n[7],
-			m[0] * n[8] + m[4] * n[9] + m[8] * n[10] + m[12] * n[11], m[1] * n[8] + m[5] * n[9] + m[9] * n[10] + m[13] * n[11], m[2] * n[8] + m[6] * n[9] + m[10] * n[10] + m[14] * n[11], m[3] * n[8] + m[7] * n[9] + m[11] * n[10] + m[15] * n[11],
-			m[0] * n[12] + m[4] * n[13] + m[8] * n[14] + m[12] * n[15], m[1] * n[12] + m[5] * n[13] + m[9] * n[14] + m[13] * n[15], m[2] * n[12] + m[6] * n[13] + m[10] * n[14] + m[14] * n[15], m[3] * n[12] + m[7] * n[13] + m[11] * n[14] + m[15] * n[15]);
+		/*return Matrix4(
+			m[0]  *	n[0] + m[1]  * n[4] + m[2]  * n[8] + m[3]  * n[12],		m[0]  * n[1] + m[1]  * n[5] + m[2]	* n[9] + m[3]  * n[13],		m[0]  * n[2] + m[1]  * n[6] + m[2]  * n[10] + m[3]  * n[14],	m[0]  * n[3] + m[1]  * n[7] + m[2]  * n[11] + m[3]  * n[15],
+			m[4]  *	n[0] + m[5]  * n[4] + m[6]  * n[8] + m[7]  * n[12],		m[4]  * n[1] + m[5]  * n[5] + m[6]	* n[9] + m[7]  * n[13],		m[4]  * n[2] + m[5]  * n[6] + m[6]  * n[10] + m[7]  * n[14],	m[4]  * n[3] + m[5]  * n[7] + m[6]  * n[11] + m[7]  * n[15],
+			m[8]  *	n[0] + m[9]  * n[4] + m[10] * n[8] + m[11] * n[12],		m[8]  * n[1] + m[9]  * n[5] + m[10] * n[9] + m[11] * n[13],		m[8]  * n[2] + m[9]  * n[6] + m[10] * n[10] + m[11] * n[14],	m[8]  * n[3] + m[9]  * n[7] + m[10] * n[11] + m[11] * n[15],
+			m[12] * n[0] + m[13] * n[4] + m[14] * n[8] + m[15] * n[12],		m[12] * n[1] + m[13] * n[5] + m[14] * n[9] + m[15] * n[13],		m[12] * n[2] + m[13] * n[6] + m[14] * n[10] + m[15] * n[14],	m[12] * n[3] + m[13] * n[7] + m[14] * n[11] + m[15] * n[15]
+		);*/
+		return Matrix4(
+			m[0] * n[0]  + m[4] * n[1]  + m[8] * n[2]  + m[12] * n[3],		m[1] * n[0]  + m[5] * n[1]  + m[9] * n[2]  + m[13] * n[3],		m[2] * n[0]  + m[6] * n[1]  + m[10] * n[2]  + m[14] * n[3],		m[3] * n[0]  + m[7] * n[1]  + m[11] * n[2]  + m[15] * n[3],
+			m[0] * n[4]  + m[4] * n[5]  + m[8] * n[6]  + m[12] * n[7],		m[1] * n[4]  + m[5] * n[5]  + m[9] * n[6]  + m[13] * n[7],		m[2] * n[4]  + m[6] * n[5]  + m[10] * n[6]  + m[14] * n[7],		m[3] * n[4]  + m[7] * n[5]  + m[11] * n[6]  + m[15] * n[7],
+			m[0] * n[8]  + m[4] * n[9]  + m[8] * n[10] + m[12] * n[11],		m[1] * n[8]  + m[5] * n[9]  + m[9] * n[10] + m[13] * n[11],		m[2] * n[8]  + m[6] * n[9]  + m[10] * n[10] + m[14] * n[11],	m[3] * n[8]  + m[7] * n[9]  + m[11] * n[10] + m[15] * n[11],
+			m[0] * n[12] + m[4] * n[13] + m[8] * n[14] + m[12] * n[15],		m[1] * n[12] + m[5] * n[13] + m[9] * n[14] + m[13] * n[15],		m[2] * n[12] + m[6] * n[13] + m[10] * n[14] + m[14] * n[15],	m[3] * n[12] + m[7] * n[13] + m[11] * n[14] + m[15] * n[15]
+		);
 	}
 	Matrix4& Matrix4::operator*=(const Matrix4& rhs)
 	{
