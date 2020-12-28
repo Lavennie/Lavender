@@ -21,6 +21,7 @@ namespace Lavender
 		~Shader();
 
 		void InitShader(const string& vertexSource, const string& fragmentSource);
+		void InitShaderFromFile(const string& vertexSourcePath, const string& fragmentSourcePath);
 
 		void Bind() const;
 		void Unbind() const;

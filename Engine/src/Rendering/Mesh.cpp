@@ -50,7 +50,7 @@ namespace Lavender
 
 		if (!file.is_open())
 		{
-			Log::PrintError("Failed to open file at path " + path);
+			Log::PrintError("Failed to open mesh at path " + path);
 			return;
 		}
 
@@ -93,77 +93,6 @@ namespace Lavender
 
 		delete[] vertices;
 		delete[] indices;
-
-		/*vector<unsigned int> vertexIndices, uvIndices, normalIndices;
-		vector<Vector3> temp_vertices;
-		vector<Vector2> temp_uvs;
-		vector<Vector3> temp_normals;
-
-		FILE* file = fopen(path.c_str(), "r");
-		if (file == NULL)
-		{
-			Log::PrintError("Failed to open file " + path);
-			return;
-		}
-
-		while (TRUE)
-		{
-			char lineHeader[128];
-			// read the first word of the line
-			int res = fscanf(file, "%s", lineHeader);
-			if (res == EOF)  // End Of File
-			{
-				break;
-			}
-			// vertex position
-			if (strcmp(lineHeader, "v") == 0)
-			{
-				Vector3 position;
-				fscanf(file, "%f %f %f\n", &position.x, &position.y, &position.z);
-				temp_vertices.push_back(position);
-			}
-			// texture coordinate
-			else if (strcmp(lineHeader, "vt") == 0)
-			{
-				Vector2 texCoord;
-				fscanf(file, "%f %f\n", &texCoord.x, &texCoord.y);
-				temp_uvs.push_back(texCoord);
-			}
-			// normals
-			else if (strcmp(lineHeader, "vn") == 0)
-			{
-				Vector3 normal;
-				fscanf(file, "%f %f %f\n", &normal.x, &normal.y, &normal.z);
-				temp_normals.push_back(normal);
-			}
-			// face, texcoordinate and normal indices
-			else if (strcmp(lineHeader, "f") == 0)
-			{
-				string vertex1, vertex2, vertex3;
-				unsigned int vertexIndex[3], uvIndex[3], normalIndex[3];
-				int matches = fscanf(file, "%d/%d/%d %d/%d/%d %d/%d/%d\n", &vertexIndex[0], &uvIndex[0], &normalIndex[0], &vertexIndex[1], &uvIndex[1], &normalIndex[1], &vertexIndex[2], &uvIndex[2], &normalIndex[2]);
-				if (matches != 9)
-				{
-					Log::PrintError("File can't be read by this simple parser : (Try exporting with other options)");
-					return;
-				}
-				vertexIndices.push_back(vertexIndex[0]);
-				vertexIndices.push_back(vertexIndex[1]);
-				vertexIndices.push_back(vertexIndex[2]);
-				uvIndices.push_back(uvIndex[0]);
-				uvIndices.push_back(uvIndex[1]);
-				uvIndices.push_back(uvIndex[2]);
-				normalIndices.push_back(normalIndex[0]);
-				normalIndices.push_back(normalIndex[1]);
-				normalIndices.push_back(normalIndex[2]);
-			}
-		}
-
-		for (unsigned int i = 0; i < vertexIndices.size(); i++)
-		{
-			Vector3 vertex = temp_vertices[vertexIndices[i] - 1];
-
-		}*/
 	}
 
     void Mesh::Draw()

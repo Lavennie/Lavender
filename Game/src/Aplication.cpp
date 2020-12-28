@@ -54,32 +54,8 @@ int main()
 	Info info = world.InitInfo(idea);
 	Real real = world.InitRealRoot(info);
 		
-	const string vertexShaderSource =
-		"#version 330\n"
-		"layout (location = 0) in vec3 aPos;\n"
-		"layout (location = 1) in vec3 aTexCoord;\n"
-		"layout (location = 2) in vec3 aNormal;\n"
-		"out vec3 _texCoord;\n"
-		"out vec3 _color;\n"
-		"uniform mat4 mvp;\n"
-		"void main()\n"
-		"{\n"
-		"	_texCoord = aTexCoord;\n"
-		"	_color = (aPos + vec3(1.0, 1.0, 1.0)) / 2.0;\n"
-		"   vec4 temp = mvp * vec4(aPos, 1.0);\n"
-		"   gl_Position = temp;\n"
-		"}\0";
-	const string fragmentShaderSource =
-		"#version 330\n"
-		"in vec3 _texCoord;\n"
-		"in vec3 _color;\n"
-		"out vec4 FragColor;\n"
-		"void main()\n"
-		"{\n"
-		"	FragColor = vec4(_color, 1.0);\n"
-		"}\0";
 	Shader shader;
-	shader.InitShader(vertexShaderSource, fragmentShaderSource);
+	shader.InitShaderFromFile(filePath + "Shaders/vertex.vs", filePath + "Shaders/fragment.fs");
 	shader.Bind();
 
 	MSG msg;

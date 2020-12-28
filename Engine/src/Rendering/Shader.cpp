@@ -1,6 +1,8 @@
 #include "Shader.h"
 #include <GL/GLEXT.h>
 #include "Logging/Logging.h"
+#include <fstream>
+#include <iostream>
 
 using namespace std;
 
@@ -61,6 +63,7 @@ namespace Lavender
 			((PFNGLGETPROGRAMINFOLOGPROC)wglGetProcAddress("glGetProgramInfoLog"))(m_Id, 512, NULL, infoLog);
 			Log::PrintError("ERROR::SHADER::LINK_FAILED");
 			Log::PrintError(infoLog);
+			Log::PrintError(infoLog);
 		}
 
 		((PFNGLDELETESHADERPROC)wglGetProcAddress("glDeleteShader"))(vertexShader);
@@ -83,6 +86,28 @@ namespace Lavender
 
 			m_Uniforms.insert(std::pair<string, GLint>(name, location));
 		}
+	}
+	void Shader::InitShaderFromFile(const string& vertexSourcePath, const string& fragmentSourcePath)
+	{
+		ifstream fileVert(vertexSourcePath, ios::in);
+		if (!fileVert.is_open())
+		{
+			Log::PrintError("Failed to open vertex shader at path " + vertexSourcePath);
+			return;
+		}
+		ifstream fileFrag(fragmentSourcePath, ios::in);
+		if (!fileFrag.is_open())
+		{
+			Log::PrintError("Failed to open fragment shader at path " + fragmentSourcePath);
+			return;
+		}
+		const string vertSource ((istreambuf_iterator<char>(fileVert)), (std::istreambuf_iterator<char>()));
+		const string fragSource((istreambuf_iterator<char>(fileFrag)), (std::istreambuf_iterator<char>()));
+
+		InitShader(vertSource, fragSource);
+
+		fileVert.close();
+		fileFrag.close();
 	}
 
 	void Shader::Bind() const
