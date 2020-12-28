@@ -11,10 +11,10 @@ namespace Lavender
 	{
 		double c1 = cos((eulerY * (M_PI / 180.0f)) / 2.0f);
 		double s1 = sin((eulerY * (M_PI / 180.0f)) / 2.0f);
-		double c2 = cos((eulerX * (M_PI / 180.0f)) / 2.0f);
-		double s2 = sin((eulerX * (M_PI / 180.0f)) / 2.0f);
-		double c3 = cos((eulerZ * (M_PI / 180.0f)) / 2.0f);
-		double s3 = sin((eulerZ * (M_PI / 180.0f)) / 2.0f);
+		double c2 = cos((eulerZ * (M_PI / 180.0f)) / 2.0f);
+		double s2 = sin((eulerZ * (M_PI / 180.0f)) / 2.0f);
+		double c3 = cos((eulerX * (M_PI / 180.0f)) / 2.0f);
+		double s3 = sin((eulerX * (M_PI / 180.0f)) / 2.0f);
 		w = c1 * c2 * c3 - s1 * s2 * s3;
 		v = Vector3(
 			c1 * c2 * s3 + s1 * s2 * c3,
@@ -26,10 +26,10 @@ namespace Lavender
 	{
 		double c1 = cos((euler.y * (M_PI / 180.0f)) / 2.0f);
 		double s1 = sin((euler.y * (M_PI / 180.0f)) / 2.0f);
-		double c2 = cos((euler.x * (M_PI / 180.0f)) / 2.0f);
-		double s2 = sin((euler.x * (M_PI / 180.0f)) / 2.0f);
-		double c3 = cos((euler.z * (M_PI / 180.0f)) / 2.0f);
-		double s3 = sin((euler.z * (M_PI / 180.0f)) / 2.0f);
+		double c2 = cos((euler.z * (M_PI / 180.0f)) / 2.0f);
+		double s2 = sin((euler.z * (M_PI / 180.0f)) / 2.0f);
+		double c3 = cos((euler.x * (M_PI / 180.0f)) / 2.0f);
+		double s3 = sin((euler.x * (M_PI / 180.0f)) / 2.0f);
 		w = c1 * c2 * c3 - s1 * s2 * s3;
 		v = Vector3(
 			c1 * c2 * s3 + s1 * s2 * c3,
@@ -100,7 +100,29 @@ namespace Lavender
 	}
 	Vector3 Quaternion::GetEulerAngles() const
 	{
+
 		float sqw = w * w;
+		float sqx = v.x * v.x;
+		float sqy = v.y * v.y;
+		float sqz = v.z * v.z;
+		float unit = sqx + sqy + sqz + sqw; // if normalized is one, otherwise is correction factor
+		float test = v.x * v.y + v.z * w;
+		if (test > 0.499 * unit)
+		{
+			// singularity at north pole
+			return Vector3(90.0f, (2.0f * atan2(v.x, w)) * (180.0f / M_PI), 0.0f);
+		}
+		if (test < -0.499 * unit)
+		{
+			// singularity at south pole
+			return Vector3(-90.0f, (-2.0f * atan2(v.x, w)) * (180.0f / M_PI), 0.0f);
+		}
+		return Vector3(
+			atan2(2.0f * v.x * w - 2.0f * v.y * v.z, -sqx + sqy - sqz + sqw) * (180.0f / M_PI),
+			atan2(2.0f * v.y * w - 2.0f * v.x * v.z, sqx - sqy - sqz + sqw) * (180.0f / M_PI),
+			asin(2.0f * test / unit) * (180.0f / M_PI));
+
+		/*float sqw = w * w;
 		float sqx = v.x * v.x;
 		float sqy = v.y * v.y;
 		float sqz = v.z * v.z;
@@ -119,7 +141,7 @@ namespace Lavender
 		return Vector3(
 			asin(2.0f * test / unit) * (180.0f / M_PI),
 			atan2(2.0f * v.y * w - 2.0f * v.x * v.z, sqx - sqy - sqz + sqw) * (180.0f / M_PI),
-			atan2(2.0f * v.x * w - 2.0f * v.y * v.z, -sqx + sqy - sqz + sqw) * (180.0f / M_PI));
+			atan2(2.0f * v.x * w - 2.0f * v.y * v.z, -sqx + sqy - sqz + sqw) * (180.0f / M_PI));*/
 	}
 
 	void Quaternion::Normalize()

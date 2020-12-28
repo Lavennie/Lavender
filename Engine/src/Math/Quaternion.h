@@ -40,9 +40,7 @@ namespace Lavender
 
 		Quaternion operator*(const float a) const;
 		Vector3 operator*(const Vector3& other) const;
-	private:
 		Quaternion operator*(const Quaternion& other) const;
-	public:
 		Quaternion& operator*=(const float a);
 		Quaternion& operator*=(const Quaternion& other);
 

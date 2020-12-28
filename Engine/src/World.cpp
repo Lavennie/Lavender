@@ -13,11 +13,10 @@ namespace Lavender
 
 	void World::Update()
 	{
-
 		const float CAMERA_MOVE_SPEED = 0.1f;
-		const float CAMERA_ROTATE_SPEED1 = 1.0f;
 		const float CAMERA_ROTATE_SPEED = 0.1f;
-		m_Camera.rotation *= Quaternion(0, Input::DeltaMousePosition().x * CAMERA_ROTATE_SPEED, 0);
+		m_Camera.rotation = Quaternion(0, Input::DeltaMousePosition().x * CAMERA_ROTATE_SPEED, 0) * 
+			m_Camera.rotation * Quaternion(-Input::DeltaMousePosition().y * CAMERA_ROTATE_SPEED, 0, 0);
 
 		Vector3 translation;
 		if (Input::KeyDown(0x41))
