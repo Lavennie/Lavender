@@ -1,50 +1,46 @@
 #include "World.h"
+#include <iostream>
 
 namespace Lavender
 {
-	World::World() :
-		m_Camera(80, 4.0f / 3.0f, 1.0f, 10.0f),
+	World::World(float fov, Vector2 windowSize, float zNear, float zFar) :
+		m_Camera(fov, windowSize.x / windowSize.y, zNear, zFar),
 		m_IdeaLayer(),
 		m_SubIdeaLayer(),
 		m_InfoLayer(),
 		m_RealLayer()
 	{}
 
-	void World::Update(const Input& input)
+	void World::Update()
 	{
+
 		const float CAMERA_MOVE_SPEED = 0.1f;
-		const float CAMERA_ROTATE_SPEED = 1.0f;
-		if (input.KeyDown(0x51))
-		{
-			m_Camera.rotation *= Quaternion(0, -CAMERA_ROTATE_SPEED, 0);
-		}
-		if (input.KeyDown(0x45))
-		{
-			m_Camera.rotation *= Quaternion(0, CAMERA_ROTATE_SPEED, 0);
-		}
+		const float CAMERA_ROTATE_SPEED1 = 1.0f;
+		const float CAMERA_ROTATE_SPEED = 0.1f;
+		m_Camera.rotation *= Quaternion(0, Input::DeltaMousePosition().x * CAMERA_ROTATE_SPEED, 0);
 
 		Vector3 translation;
-		if (input.KeyDown(0x41))
+		if (Input::KeyDown(0x41))
 		{
 			translation.x -= CAMERA_MOVE_SPEED;
 		}
-		if (input.KeyDown(0x44))
+		if (Input::KeyDown(0x44))
 		{
 			translation.x += CAMERA_MOVE_SPEED;
 		}
-		if (input.KeyDown(VK_SHIFT))
+		if (Input::KeyDown(VK_SHIFT))
 		{
 			translation.y -= CAMERA_MOVE_SPEED;
 		}
-		if (input.KeyDown(VK_SPACE))
+		if (Input::KeyDown(VK_SPACE))
 		{
 			translation.y += CAMERA_MOVE_SPEED;
 		}
-		if (input.KeyDown(0x53))
+		if (Input::KeyDown(0x53))
 		{
 			translation.z -= CAMERA_MOVE_SPEED;
 		}
-		if (input.KeyDown(0x57))
+		if (Input::KeyDown(0x57))
 		{
 			translation.z += CAMERA_MOVE_SPEED;
 		}
@@ -84,5 +80,9 @@ namespace Lavender
 	const Matrix4& World::GetProjectionMatrix() const
 	{
 		return m_Camera.GetProjectionMatrix();
+	}
+	void World::SetProjectionMatrix(float fov, float ar, float zNear, float zFar)
+	{
+		m_Camera.SetProjectionMatrix(fov, ar, zNear, zFar);
 	}
 }

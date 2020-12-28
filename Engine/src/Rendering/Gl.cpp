@@ -2,6 +2,7 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <iostream>
+#include <windowsx.h>
 #include "Logging/Logging.h"
 
 namespace Lavender
@@ -26,7 +27,7 @@ namespace Lavender
 		Log::PrintInfo("Deleted opengl context and window");
 	}
 
-	bool Gl::InitWindow(const char* title)
+	bool Gl::InitWindow(const char* title, Vector2 windowSize)
 	{
 		static HINSTANCE hInstance = NULL;
 
@@ -55,8 +56,8 @@ namespace Lavender
 
 
 		m_Hwnd = CreateWindowEx(NULL, TEXT("OpenGL"), TEXT("Lavender"),
-			WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_OVERLAPPEDWINDOW | WS_VISIBLE,
-			CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
+			WS_POPUP | WS_VISIBLE,
+			0, 0, windowSize.x, windowSize.y,
 			NULL, NULL, hInstance, NULL);
 
 		if (m_Hwnd == NULL)
@@ -96,12 +97,34 @@ namespace Lavender
 		SetProp(m_Hwnd, (LPCWSTR)L"MyWindow", (HANDLE)this);
 
 		m_HasWindow = true;
+
 		return true;
 	}
 
 	bool Gl::HasWindow() const
 	{
 		return m_HasWindow;
+	}
+	Vector2 Gl::GetClientSize() const
+	{
+		RECT r;
+		GetClientRect(m_Hwnd, &r);
+		return Vector2(r.right, r.bottom);
+	}
+	Vector2 Gl::GetInScreenCenter() const
+	{
+		RECT r;
+		GetClientRect(m_Hwnd, &r);
+		POINT p;
+		p.x = r.right / 2.0f;
+		p.y = r.bottom / 2.0f;
+		ClientToScreen(m_Hwnd, &p);
+		return Vector2(p.x, p.y);
+	}
+
+	void Gl::Close() const
+	{
+		PostMessage(m_Hwnd, WM_CLOSE, 0, 0);
 	}
 
 	void Gl::Clear() const

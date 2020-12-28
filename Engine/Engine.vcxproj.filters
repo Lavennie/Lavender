@@ -24,6 +24,7 @@
     <ClCompile Include="src\Property.cpp" />
     <ClCompile Include="src\SubIdea.cpp" />
     <ClCompile Include="src\LayerConcept.cpp" />
+    <ClCompile Include="src\Core.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Rendering\Gl.h" />
@@ -49,5 +50,6 @@
     <ClInclude Include="src\Property.h" />
     <ClInclude Include="src\SubIdea.h" />
     <ClInclude Include="src\LayerConcept.h" />
+    <ClInclude Include="src\Core.h" />
   </ItemGroup>
 </Project>

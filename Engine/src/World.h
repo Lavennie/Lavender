@@ -4,6 +4,7 @@
 #include "LayerReal.h"
 #include "Rendering/Camera.h"
 #include "Input/Input.h"
+#include "Core.h"
 
 namespace Lavender
 {
@@ -21,9 +22,9 @@ namespace Lavender
 		World(const World&) = delete;
 		World& operator=(const World&) = delete;
 	public:
-		World();
+		World(float fov, Vector2 windowSize, float zNear, float);
 
-		void Update(const Input& input);
+		void Update();
 		void Render();
 		void UpdateSound();
 
@@ -34,6 +35,7 @@ namespace Lavender
 
 		Camera* GetCamera();
 		const Matrix4& GetProjectionMatrix() const;
+		void SetProjectionMatrix(float fov, float ar, float zNear, float zFar);
 	};
 }
 

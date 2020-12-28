@@ -46,7 +46,8 @@ namespace Lavender
 		static Matrix4 InitScale(const Vector3& scale);
 		// Field of view is in radians
 		static Matrix4 InitPerspectiveProjection(float fov, float ar, float zNear, float zFar);
-		static Matrix4 InitPerspectiveProjection(float left, float right, float top, float bottom, float zNear, float zFar);
+		static Matrix4 InitPerspectiveProjection(float left, float right, float bottom, float top, float zNear, float zFar);
+		static Matrix4 InitOrthographicProjection(float left, float right, float bottom, float top, float zNear, float zFar);
 
 		Matrix4& Translate(float x, float y, float z);   // translation by (x,y,z)
 		Matrix4& Translate(const Vector3& v);            //

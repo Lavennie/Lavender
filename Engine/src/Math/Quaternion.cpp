@@ -117,12 +117,12 @@ namespace Lavender
 			return Vector3(-M_PI / 2.0f, -2.0f * atan2(v.x, w), 0.0f);
 		}
 		return Vector3(
-			asin(2.0f * test / unit),
-			atan2(2.0f * v.y * w - 2.0f * v.x * v.z, sqx - sqy - sqz + sqw),
-			atan2(2.0f * v.x * w - 2.0f * v.y * v.z, -sqx + sqy - sqz + sqw));
+			asin(2.0f * test / unit) * (180.0f / M_PI),
+			atan2(2.0f * v.y * w - 2.0f * v.x * v.z, sqx - sqy - sqz + sqw) * (180.0f / M_PI),
+			atan2(2.0f * v.x * w - 2.0f * v.y * v.z, -sqx + sqy - sqz + sqw) * (180.0f / M_PI));
 	}
 
-	Quaternion& Quaternion::Normalize()
+	void Quaternion::Normalize()
 	{
 		float d = GetMagnitude();
 
@@ -130,16 +130,21 @@ namespace Lavender
 		this->v.y /= d;
 		this->v.z /= d;
 		this->w /= d;
-
-		return *this;
 	}
-	Quaternion& Quaternion::Conjugate()
+	Quaternion Quaternion::Normalized()
+	{
+		float d = GetMagnitude();
+		return Quaternion(v / d, w / d);
+	}
+	void Quaternion::Conjugate()
 	{
 		this->v.x = -v.x;
 		this->v.y = -v.y;
 		this->v.z = -v.z;
-
-		return *this;
+	}
+	Quaternion Quaternion::Conjugated()
+	{
+		return Quaternion(-v, w);
 	}
 	Quaternion Quaternion::Normalize(const Quaternion& q)
 	{
@@ -157,17 +162,22 @@ namespace Lavender
 		return to * Conjugate(from);
 	}
 
+	Quaternion Quaternion::Multiply(const Quaternion& q1, const Quaternion& q2)
+	{
+		return Quaternion(q1.v * q2.w + q2.v * q1.w + q1.v.Cross(q2.v), q1.w * q2.w - q1.v.Dot(q2.v));
+	}
+
 	Quaternion Quaternion::operator*(const float a) const
 	{
 		return Quaternion(v.x * a, v.y * a, v.z * a, w * a);
 	}
-	Vector3 Quaternion::operator*(const Vector3& other) const
+	Vector3 Quaternion::operator*(const Vector3& vector) const
 	{
-		return (*this * Quaternion(other, 0) * Conjugate(*this)).v;
+		return Multiply(Multiply(*this, Quaternion(vector, 0)), Conjugate(*this)).v;
 	}
 	Quaternion Quaternion::operator*(const Quaternion& other) const
 	{
-		return Quaternion(v * other.w + other.v * w + v.Cross(other.v), w * other.w - v.Dot(other.v));
+		return Multiply(*this, other).Normalized();
 	}
 	Quaternion& Quaternion::operator*=(const float a)
 	{
@@ -182,6 +192,7 @@ namespace Lavender
 	{
 		v = v * other.w + other.v * w + v.Cross(other.v);
 		w = w * other.w - v.Dot(other.v);
+		Normalize();
 
 		return *this;
 	}

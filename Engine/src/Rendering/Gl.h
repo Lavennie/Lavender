@@ -8,6 +8,7 @@ namespace Lavender
 {
 	class Gl
 	{
+		friend class Input;
 	private:
 		HWND m_Hwnd;
 		HDC m_Hdc;
@@ -18,9 +19,13 @@ namespace Lavender
 		Gl();
 		~Gl();
 
-		bool InitWindow(const char* title);
+		bool InitWindow(const char* title, Vector2 windowSize);
 
 		bool HasWindow() const;
+		Vector2 GetClientSize() const;
+		Vector2 GetInScreenCenter() const;
+
+		void Close() const;
 
 		void Clear() const;
 		void ClearColor(const Color& color) const;

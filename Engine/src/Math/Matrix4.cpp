@@ -115,10 +115,10 @@ namespace Lavender
 	{
 		const Quaternion& q = rotation;
 		return Matrix4(
-			1 - 2 * q.v.y * q.v.y - 2 * q.v.z * q.v.z, 2 * q.v.x * q.v.y + 2 * q.w * q.v.z,		  2 * q.v.x * q.v.z - 2 * q.w * q.v.y,		 0,
-			2 * q.v.x * q.v.y - 2 * q.v.z * q.w,	   1 - 2 * q.v.x * q.v.x - 2 * q.v.z * q.v.z, 2 * q.v.y * q.v.z + 2 * q.w * q.v.x,		 0,
-			2 * q.v.x * q.v.z + 2 * q.v.y * q.w,	   2 * q.v.z * q.v.y - 2 * q.v.x * q.w,		  1 - 2 * q.v.x * q.v.x - 2 * q.v.y * q.v.y, 0,
-			0,										   0,										  0,										 1);
+			1.0f - 2.0f * q.v.y * q.v.y - 2.0f * q.v.z * q.v.z, 2.0f * q.v.x * q.v.y + 2.0f * q.w * q.v.z,			2.0f * q.v.x * q.v.z - 2.0f * q.w * q.v.y,			0,
+			2.0f * q.v.x * q.v.y - 2.0f * q.v.z * q.w,			1.0f - 2.0f * q.v.x * q.v.x - 2.0f * q.v.z * q.v.z, 2.0f * q.v.y * q.v.z + 2.0f * q.w * q.v.x,			0,
+			2.0f * q.v.x * q.v.z + 2.0f * q.v.y * q.w,			2.0f * q.v.z * q.v.y - 2.0f * q.v.x * q.w,			1.0f - 2.0f * q.v.x * q.v.x - 2.0f * q.v.y * q.v.y, 0,
+			0,													0,													0,													1.0f);
 	}
 	Matrix4 Matrix4::InitRotation(const Vector3& euler)
 	{
@@ -172,13 +172,21 @@ namespace Lavender
 			0,							   0,					   (-zFar - zNear) / (zNear - zFar),	   1.0f,
 			0,							   0,					   (2.0f * zFar * zNear) / (zNear - zFar), 0);
 	}
-	Matrix4 Matrix4::InitPerspectiveProjection(float left, float right, float top, float bottom, float zNear, float zFar)
+	Matrix4 Matrix4::InitPerspectiveProjection(float left, float right, float bottom, float top, float zNear, float zFar)
 	{
 		return Matrix4(
 			(2.0f * zNear) / (right - left), 0,								  (right + left) / (right - left),	0,
 			0,								 (2.0f * zNear) / (top - bottom), (top + bottom) / (top - bottom),	0,
 			0,								 0,								  -(zFar + zNear) / (zFar - zNear), (-2.0f * zFar * zNear) / (zFar - zNear),
 			0,								 0,								  -1.0f,							0);
+	}
+	Matrix4 Matrix4::InitOrthographicProjection(float left, float right, float bottom, float top, float zNear, float zFar)
+	{
+		return Matrix4(
+			2.0f / (right - left), 0, 0, 0,
+			0, 2.0f / tan(top - bottom), 0, 0,
+			0, 0, -2.0f / (zFar - zNear), 0,
+			-(right + left) / (right - left), -(top + bottom) / (top - bottom), -(zFar + zNear) / (zFar - zNear), 1.0f);
 	}
 
 	Matrix4& Matrix4::Translate(float x, float y, float z)

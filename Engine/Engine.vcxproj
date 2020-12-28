@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Core.cpp" />
     <ClCompile Include="src\Property.cpp" />
     <ClCompile Include="src\Rendering\Camera.cpp" />
     <ClCompile Include="src\Component.cpp" />
@@ -176,6 +177,7 @@
     <ClCompile Include="src\SubIdea.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Core.h" />
     <ClInclude Include="src\Property.h" />
     <ClInclude Include="src\Rendering\Camera.h" />
     <ClInclude Include="src\Component.h" />
