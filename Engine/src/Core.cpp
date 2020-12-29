@@ -21,4 +21,8 @@ namespace Lavender
 	{
 		return m_Gl.GetInput();
 	}
+	ShaderDatabase& Core::GetShaders()
+	{
+		return m_Shaders;
+	}
 }

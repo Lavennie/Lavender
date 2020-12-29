@@ -13,48 +13,14 @@
 namespace Lavender
 {
 	Mesh::Mesh() : m_Vao(0), m_Vbo(0), m_Ibo(0), m_IndexCount(0) {}
-	Mesh::Mesh(const string& path) 
-	{
-		InitMesh(path);
-	}
-	Mesh::~Mesh()
-	{
-		((PFNGLDELETEVERTEXARRAYSPROC)wglGetProcAddress("glDeleteVertexArrays"))(1, &m_Vao);
-		((PFNGLDELETEBUFFERSPROC)wglGetProcAddress("glDeleteBuffers"))(1, &m_Vbo);
-		((PFNGLDELETEBUFFERSPROC)wglGetProcAddress("glDeleteBuffers"))(1, &m_Ibo);
-		Log::PrintInfo("Deleted mesh");
-	}
-
-	void Mesh::InitMesh(size_t vertexCount, const Vertex* vertices, size_t indexCount, const unsigned int* indices, size_t attribCount, const VertexAttribPointer* attribs)
-	{
-		m_IndexCount = indexCount;
-
-		((PFNGLGENVERTEXARRAYSPROC)wglGetProcAddress("glGenVertexArrays"))(1, &m_Vao);
-		((PFNGLGENBUFFERSPROC)wglGetProcAddress("glGenBuffers"))(1, &m_Vbo);
-		((PFNGLGENBUFFERSPROC)wglGetProcAddress("glGenBuffers"))(1, &m_Ibo);
-
-		((PFNGLBINDVERTEXARRAYPROC)wglGetProcAddress("glBindVertexArray"))(m_Vao);
-
-		((PFNGLBINDBUFFERPROC)wglGetProcAddress("glBindBuffer"))(GL_ARRAY_BUFFER, m_Vbo);
-		((PFNGLBUFFERDATAPROC)wglGetProcAddress("glBufferData"))(GL_ARRAY_BUFFER, vertexCount * sizeof(Vertex), vertices, GL_STATIC_DRAW);
-
-		((PFNGLBINDBUFFERPROC)wglGetProcAddress("glBindBuffer"))(GL_ELEMENT_ARRAY_BUFFER, m_Ibo);
-		((PFNGLBUFFERDATAPROC)wglGetProcAddress("glBufferData"))(GL_ELEMENT_ARRAY_BUFFER, indexCount * sizeof(unsigned int), indices, GL_STATIC_DRAW);
-
-		for (size_t i = 0; i < attribCount; i++)
-		{
-			((PFNGLENABLEVERTEXATTRIBARRAYPROC)wglGetProcAddress("glEnableVertexAttribArray"))(i);
-			((PFNGLVERTEXATTRIBPOINTERPROC)wglGetProcAddress("glVertexAttribPointer"))
-				(attribs[i].index, attribs[i].size, attribs[i].type, attribs[i].normalized, attribs[i].stride, attribs[i].offset);
-		}
-	}
-	void Mesh::InitMesh(const string& path)
+	Mesh::Mesh(const string& path) : Mesh()
 	{
 		ifstream file(path, ios::binary | ios::in);
 
 		if (!file.is_open())
 		{
 			Log::PrintError("Failed to open mesh at path " + path);
+			file.close();
 			return;
 		}
 
@@ -98,6 +64,38 @@ namespace Lavender
 		delete[] vertices;
 		delete[] indices;
 	}
+	Mesh::~Mesh()
+	{
+		((PFNGLDELETEVERTEXARRAYSPROC)wglGetProcAddress("glDeleteVertexArrays"))(1, &m_Vao);
+		((PFNGLDELETEBUFFERSPROC)wglGetProcAddress("glDeleteBuffers"))(1, &m_Vbo);
+		((PFNGLDELETEBUFFERSPROC)wglGetProcAddress("glDeleteBuffers"))(1, &m_Ibo);
+		Log::PrintInfo("Deleted mesh");
+	}
+
+	void Mesh::InitMesh(size_t vertexCount, const Vertex* vertices, size_t indexCount, const unsigned int* indices, size_t attribCount, const VertexAttribPointer* attribs)
+	{
+		m_IndexCount = indexCount;
+
+		((PFNGLGENVERTEXARRAYSPROC)wglGetProcAddress("glGenVertexArrays"))(1, &m_Vao);
+		((PFNGLGENBUFFERSPROC)wglGetProcAddress("glGenBuffers"))(1, &m_Vbo);
+		((PFNGLGENBUFFERSPROC)wglGetProcAddress("glGenBuffers"))(1, &m_Ibo);
+
+		((PFNGLBINDVERTEXARRAYPROC)wglGetProcAddress("glBindVertexArray"))(m_Vao);
+
+		((PFNGLBINDBUFFERPROC)wglGetProcAddress("glBindBuffer"))(GL_ARRAY_BUFFER, m_Vbo);
+		((PFNGLBUFFERDATAPROC)wglGetProcAddress("glBufferData"))(GL_ARRAY_BUFFER, vertexCount * sizeof(Vertex), vertices, GL_STATIC_DRAW);
+
+		((PFNGLBINDBUFFERPROC)wglGetProcAddress("glBindBuffer"))(GL_ELEMENT_ARRAY_BUFFER, m_Ibo);
+		((PFNGLBUFFERDATAPROC)wglGetProcAddress("glBufferData"))(GL_ELEMENT_ARRAY_BUFFER, indexCount * sizeof(unsigned int), indices, GL_STATIC_DRAW);
+
+		for (size_t i = 0; i < attribCount; i++)
+		{
+			((PFNGLENABLEVERTEXATTRIBARRAYPROC)wglGetProcAddress("glEnableVertexAttribArray"))(i);
+			((PFNGLVERTEXATTRIBPOINTERPROC)wglGetProcAddress("glVertexAttribPointer"))
+				(attribs[i].index, attribs[i].size, attribs[i].type, attribs[i].normalized, attribs[i].stride, attribs[i].offset);
+		}
+	}
+	
 
     void Mesh::Draw() const
     {

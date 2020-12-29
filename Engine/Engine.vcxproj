@@ -171,6 +171,7 @@
     <ClCompile Include="src\Info.cpp" />
     <ClCompile Include="src\Idea.cpp" />
     <ClCompile Include="src\Math\Vector3.cpp" />
+    <ClCompile Include="src\ShaderDatabase.cpp" />
     <ClCompile Include="src\World.cpp" />
     <ClCompile Include="src\Rendering\Vertex.cpp" />
     <ClCompile Include="src\Rendering\VertexAttribPointer.cpp" />
@@ -198,6 +199,7 @@
     <ClInclude Include="src\Info.h" />
     <ClInclude Include="src\Idea.h" />
     <ClInclude Include="src\Math\Vector3.h" />
+    <ClInclude Include="src\ShaderDatabase.h" />
     <ClInclude Include="src\World.h" />
     <ClInclude Include="src\Rendering\Vertex.h" />
     <ClInclude Include="src\Rendering\VertexAttribPointer.h" />

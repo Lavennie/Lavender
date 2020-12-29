@@ -1,4 +1,5 @@
 #include "Property.h"
+#include "Logging/Logging.h"
 #include <iostream>
 namespace Lavender
 {
@@ -16,7 +17,11 @@ namespace Lavender
 		case Property::Type::Mesh:
 			m_Value = make_unique<PropertyModel>(*(PropertyModel*)value);
 			break;
+		case Property::Type::Shader:
+			m_Value = make_unique<PropertyShading>(*(PropertyShading*)value);
+			break;
 		default:
+			Log::PrintError("Property constructor does not support given Property::Type");
 			break;
 		}
 	}

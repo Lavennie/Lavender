@@ -9,6 +9,30 @@ using namespace std;
 namespace Lavender
 {
 	Shader::Shader() : m_Id(-1), m_Uniforms(map<string, GLint>()) {}
+	Shader::Shader(const string& vertexSourcePath, const string& fragmentSourcePath) : Shader()
+	{
+		ifstream fileVert(vertexSourcePath, ios::in);
+		if (!fileVert.is_open())
+		{
+			Log::PrintError("Failed to open vertex shader at path " + vertexSourcePath);
+			fileVert.close();
+			return;
+		}
+		ifstream fileFrag(fragmentSourcePath, ios::in);
+		if (!fileFrag.is_open())
+		{
+			Log::PrintError("Failed to open fragment shader at path " + fragmentSourcePath);
+			fileVert.close();
+			fileFrag.close();
+			return;
+		}
+		const string vertSource((istreambuf_iterator<char>(fileVert)), (std::istreambuf_iterator<char>()));
+		const string fragSource((istreambuf_iterator<char>(fileFrag)), (std::istreambuf_iterator<char>()));
+
+		InitShader(vertSource, fragSource);
+		fileVert.close();
+		fileFrag.close();
+	}
 	Shader::~Shader()
 	{
 		((PFNGLDELETEPROGRAMPROC)wglGetProcAddress("glDeleteProgram"))(m_Id);
@@ -87,28 +111,6 @@ namespace Lavender
 			m_Uniforms.insert(std::pair<string, GLint>(name, location));
 		}
 	}
-	void Shader::InitShaderFromFile(const string& vertexSourcePath, const string& fragmentSourcePath)
-	{
-		ifstream fileVert(vertexSourcePath, ios::in);
-		if (!fileVert.is_open())
-		{
-			Log::PrintError("Failed to open vertex shader at path " + vertexSourcePath);
-			return;
-		}
-		ifstream fileFrag(fragmentSourcePath, ios::in);
-		if (!fileFrag.is_open())
-		{
-			Log::PrintError("Failed to open fragment shader at path " + fragmentSourcePath);
-			return;
-		}
-		const string vertSource ((istreambuf_iterator<char>(fileVert)), (std::istreambuf_iterator<char>()));
-		const string fragSource((istreambuf_iterator<char>(fileFrag)), (std::istreambuf_iterator<char>()));
-
-		InitShader(vertSource, fragSource);
-
-		fileVert.close();
-		fileFrag.close();
-	}
 
 	void Shader::Bind() const
 	{
@@ -119,29 +121,31 @@ namespace Lavender
 		((PFNGLUSEPROGRAMPROC)wglGetProcAddress("glUseProgram"))(NULL);
 	}
 
-	void Shader::SetUniform(const string name, float value) const
+	void Shader::SetUniform(const string& name, float value) const
 	{
 		GLint location = m_Uniforms.at(name);
 		((PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f"))(m_Uniforms.at(name), value);
 	}
-	void Shader::SetUniform(const string name, const Vector2& value) const
+	void Shader::SetUniform(const string& name, const Vector2& value) const
 	{
 		((PFNGLUNIFORM2FPROC)wglGetProcAddress("glUniform2f"))(m_Uniforms.at(name), value.x, value.y);
 	}
-	void Shader::SetUniform(const string name, const Vector3& value) const
+	void Shader::SetUniform(const string& name, const Vector3& value) const
 	{
 		((PFNGLUNIFORM3FPROC)wglGetProcAddress("glUniform3f"))(m_Uniforms.at(name), value.x, value.y, value.z);
 	}
-	void Shader::SetUniform(const string name, int value) const
+	void Shader::SetUniform(const string& name, int value) const
 	{
 		((PFNGLUNIFORM1IPROC)wglGetProcAddress("glUniform1i"))(m_Uniforms.at(name), value);
 	}
-	void Shader::SetUniform(const string name, unsigned int value) const
+	void Shader::SetUniform(const string& name, unsigned int value) const
 	{
 		((PFNGLUNIFORM1UIPROC)wglGetProcAddress("glUniform1ui"))(m_Uniforms.at(name), value);
 	}
-	void Shader::SetUniform(const string name, const Matrix4& value) const
+	void Shader::SetUniform(const string& name, const Matrix4& value) const
 	{
 		((PFNGLUNIFORMMATRIX4FVPROC)wglGetProcAddress("glUniformMatrix4fv"))(m_Uniforms.at(name), 1, GL_FALSE, value.Get());
 	}
+
+	unsigned int Shader::GetProgramId() const { return m_Id; }
 }

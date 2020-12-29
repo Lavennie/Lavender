@@ -2,6 +2,7 @@
 #include "Rendering/Gl.h"
 #include "Input/Input.h"
 #include "MeshDatabase.h"
+#include "ShaderDatabase.h"
 
 namespace Lavender
 {
@@ -13,6 +14,7 @@ namespace Lavender
 		static Core* instance;
 		Gl m_Gl;
 		MeshDatabase m_Meshes;
+		ShaderDatabase m_Shaders;
 
 	public:
 		Core();
@@ -21,5 +23,6 @@ namespace Lavender
 
 		Gl* GetRenderer();
 		Input* GetInput();
+		ShaderDatabase& GetShaders();
 	};
 }

@@ -26,7 +26,7 @@ namespace Lavender
 		World(float fov, Vector2 windowSize, float zNear, float);
 
 		void Update();
-		void Render(const Shader& shader);
+		void Render();
 		void UpdateSound();
 
 		Idea& InitIdea();

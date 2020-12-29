@@ -47,12 +47,14 @@ namespace Lavender
 		m_Camera.position += m_Camera.rotation * translation;
 
 	}
-	void World::Render(const Shader& shader)
+	void World::Render()
 	{
 		for (unsigned int i = 0; i < m_RealLayer.GetRootCount(); i++)
 		{
 			Real* real = m_RealLayer.GetRootAt(i);
-			shader.SetUniform("mvp", GetProjectionMatrix() * real->GetModelMatrix());
+			const Shader* shader = real->GetProperty<PropertyShading>(Property::Type::Shader)->GetValue();
+			shader->Bind();
+			shader->SetUniform("mvp", GetProjectionMatrix() * real->GetModelMatrix());
 			real->GetProperty<PropertyModel>(Property::Type::Mesh)->GetValue()->Draw();
 		}
 	}

@@ -1,10 +1,7 @@
 #include "MeshDatabase.h"
 #include "Logging/Logging.h"
 #include "Core.h"
-#include <iostream>
 #include <fstream>
-#include <cstdint>
-#include <filesystem>
 
 namespace Lavender
 {
@@ -46,7 +43,12 @@ namespace Lavender
 	Mesh* MeshDatabase::LoadMesh(const string& meshPath, bool original)
 	{
 		ifstream file(meshPath, ios::in);
-		if (!file.is_open()) { return nullptr; }
+		if (!file.is_open()) 
+		{ 
+			file.close();
+			return nullptr; 
+		}
+		file.close();
 
 		if (original)
 		{

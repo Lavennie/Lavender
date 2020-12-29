@@ -45,11 +45,14 @@ int main()
 	World world(70, monitorSize, 0.1f, 100);
 	{
 		Mesh* cube = MeshDatabase::LoadMesh(filePath + "Models/test.sm", false);
+		Shader* shader = ShaderDatabase::LoadShader(filePath + "Shaders/vertex.vs", filePath + "Shaders/fragment.fs");
 
 		Idea& floorIdea = world.InitIdea();
 		floorIdea.AddProperty<PropertyVector3, PropertyVector3>(Property::Type::Position, Vector3(0, -3, 0));
 		floorIdea.AddProperty<PropertyVector3, PropertyVector3>(Property::Type::Scale, Vector3(10, 0.1f, 10));
 		floorIdea.AddProperty<PropertyModel, PropertyModel>(Property::Type::Mesh, cube);
+
+		floorIdea.AddProperty<PropertyShading, PropertyShading>(Property::Type::Shader, shader);
 		Info& floorInfo = world.InitInfo(floorIdea);
 		Real& floorReal = world.InitRealRoot(floorInfo);
 
@@ -57,13 +60,11 @@ int main()
 		cubeIdea.AddProperty<PropertyVector3, PropertyVector3>(Property::Type::Position, Vector3(0, 0, 3));
 		cubeIdea.AddProperty<PropertyRotation, PropertyRotation>(Property::Type::Rotation, Quaternion(45, 45, 45));
 		cubeIdea.AddProperty<PropertyModel, PropertyModel>(Property::Type::Mesh, cube);
+		cubeIdea.AddProperty<PropertyShading, PropertyShading>(Property::Type::Shader, shader);
 		Info& cubeInfo = world.InitInfo(cubeIdea);
 		Real& cubeReal = world.InitRealRoot(cubeInfo);
 	}
 		
-	Shader shader;
-	shader.InitShaderFromFile(filePath + "Shaders/vertex.vs", filePath + "Shaders/fragment.fs");
-	shader.Bind();
 
 	MSG msg;
 	PeekMessage(&msg, NULL, 0, 0, PM_REMOVE);
@@ -84,8 +85,7 @@ int main()
 			// render
 			gl->Clear();
 			gl->ClearColor(bgColor);
-			shader.Bind();
-			world.Render(shader);
+			world.Render();
 
 			//cube->Draw();
 
