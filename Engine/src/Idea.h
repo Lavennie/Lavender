@@ -17,6 +17,12 @@ namespace Lavender
 		Idea();
 		Idea(const void* nothing);
 		virtual const Property* GetProperty(Property::Type type) const;
-		void AddProperty(Property::Type type, void* value);
+
+		template <class T, class... Arguments>
+		void AddProperty(Property::Type type, Arguments&&... parameters)
+		{
+			T propertyValue(parameters...);
+			m_Properties.emplace_back(type, &propertyValue);
+		}
 	};
 }

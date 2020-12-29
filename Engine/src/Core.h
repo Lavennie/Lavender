@@ -1,15 +1,18 @@
 #pragma once
 #include "Rendering/Gl.h"
 #include "Input/Input.h"
+#include "MeshDatabase.h"
 
 namespace Lavender
 {
 	class Core
 	{
 		friend class Input;
+		friend class MeshDatabase;
 	private:
-		Gl m_Gl;
 		static Core* instance;
+		Gl m_Gl;
+		MeshDatabase m_Meshes;
 
 	public:
 		Core();

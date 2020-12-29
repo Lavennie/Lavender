@@ -19,5 +19,8 @@ namespace Lavender
 		LayerReal();
 
 		Real* AddNewRoot(const Info* info);
+
+		Real* GetRootAt(unsigned int index);
+		unsigned int GetRootCount();
 	};
 }

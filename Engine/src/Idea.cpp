@@ -16,8 +16,4 @@ namespace Lavender
 		}
 		return nullptr;
 	}
-	void Idea::AddProperty(Property::Type type, void* value)
-	{
-		m_Properties.emplace_back(type, value);
-	}
 }

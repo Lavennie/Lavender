@@ -35,24 +35,31 @@ int main()
 		return -1;
 	}
 	gl->GetInput()->Init(false);
-	
+
 	// init opengl settings
 	glEnable(GL_BLEND);
 	glEnable(GL_DEPTH_TEST);
 	glDisable(GL_CULL_FACE);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	World world(70, monitorSize, 0.1f, 20);
+	World world(70, monitorSize, 0.1f, 100);
+	{
+		Mesh* cube = MeshDatabase::LoadMesh(filePath + "Models/test.sm", false);
 
-	Mesh cube;
-	cube.InitMesh(filePath + "Models/test.sm");
-	Vector3 position(0, 0, 0);
+		Idea& floorIdea = world.InitIdea();
+		floorIdea.AddProperty<PropertyVector3, PropertyVector3>(Property::Type::Position, Vector3(0, -3, 0));
+		floorIdea.AddProperty<PropertyVector3, PropertyVector3>(Property::Type::Scale, Vector3(10, 0.1f, 10));
+		floorIdea.AddProperty<PropertyModel, PropertyModel>(Property::Type::Mesh, cube);
+		Info& floorInfo = world.InitInfo(floorIdea);
+		Real& floorReal = world.InitRealRoot(floorInfo);
 
-	Idea idea = world.InitIdea();
-	idea.AddProperty(Property::Type::Mesh, &cube);
-	idea.AddProperty(Property::Type::Position, &position);
-	Info info = world.InitInfo(idea);
-	Real real = world.InitRealRoot(info);
+		Idea& cubeIdea = world.InitIdea();
+		cubeIdea.AddProperty<PropertyVector3, PropertyVector3>(Property::Type::Position, Vector3(0, 0, 3));
+		cubeIdea.AddProperty<PropertyRotation, PropertyRotation>(Property::Type::Rotation, Quaternion(45, 45, 45));
+		cubeIdea.AddProperty<PropertyModel, PropertyModel>(Property::Type::Mesh, cube);
+		Info& cubeInfo = world.InitInfo(cubeIdea);
+		Real& cubeReal = world.InitRealRoot(cubeInfo);
+	}
 		
 	Shader shader;
 	shader.InitShaderFromFile(filePath + "Shaders/vertex.vs", filePath + "Shaders/fragment.fs");
@@ -77,12 +84,10 @@ int main()
 			// render
 			gl->Clear();
 			gl->ClearColor(bgColor);
-			world.Render();
-
 			shader.Bind();
-			Matrix4 mvp = world.GetProjectionMatrix();
-			shader.SetUniform("mvp", mvp);
-			cube.Draw();
+			world.Render(shader);
+
+			//cube->Draw();
 
 			gl->SwapBuffer();
 
@@ -104,4 +109,5 @@ int main()
 			gl->GetInput()->UpdateKeys();
 		}
 	}
+	cout << endl << endl;
 }

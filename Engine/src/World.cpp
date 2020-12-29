@@ -1,5 +1,6 @@
 #include "World.h"
 #include <iostream>
+#include "Math/Matrix4.h"
 
 namespace Lavender
 {
@@ -44,10 +45,16 @@ namespace Lavender
 			translation.z += CAMERA_MOVE_SPEED;
 		}
 		m_Camera.position += m_Camera.rotation * translation;
-	}
-	void World::Render()
-	{
 
+	}
+	void World::Render(const Shader& shader)
+	{
+		for (unsigned int i = 0; i < m_RealLayer.GetRootCount(); i++)
+		{
+			Real* real = m_RealLayer.GetRootAt(i);
+			shader.SetUniform("mvp", GetProjectionMatrix() * real->GetModelMatrix());
+			real->GetProperty<PropertyModel>(Property::Type::Mesh)->GetValue()->Draw();
+		}
 	}
 	void World::UpdateSound()
 	{
@@ -76,7 +83,7 @@ namespace Lavender
 	{
 		return &m_Camera;
 	}
-	const Matrix4& World::GetProjectionMatrix() const
+	Matrix4 World::GetProjectionMatrix() const
 	{
 		return m_Camera.GetProjectionMatrix();
 	}

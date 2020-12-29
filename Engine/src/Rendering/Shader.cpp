@@ -140,8 +140,8 @@ namespace Lavender
 	{
 		((PFNGLUNIFORM1UIPROC)wglGetProcAddress("glUniform1ui"))(m_Uniforms.at(name), value);
 	}
-	void Shader::SetUniform(const string name, Matrix4& value) const
+	void Shader::SetUniform(const string name, const Matrix4& value) const
 	{
-		((PFNGLUNIFORMMATRIX4FVPROC)wglGetProcAddress("glUniformMatrix4fv"))(m_Uniforms.at(name), 1, GL_FALSE, &value[0]);
+		((PFNGLUNIFORMMATRIX4FVPROC)wglGetProcAddress("glUniformMatrix4fv"))(m_Uniforms.at(name), 1, GL_FALSE, value.Get());
 	}
 }

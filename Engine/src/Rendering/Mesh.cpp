@@ -13,6 +13,10 @@
 namespace Lavender
 {
 	Mesh::Mesh() : m_Vao(0), m_Vbo(0), m_Ibo(0), m_IndexCount(0) {}
+	Mesh::Mesh(const string& path) 
+	{
+		InitMesh(path);
+	}
 	Mesh::~Mesh()
 	{
 		((PFNGLDELETEVERTEXARRAYSPROC)wglGetProcAddress("glDeleteVertexArrays"))(1, &m_Vao);
@@ -95,7 +99,7 @@ namespace Lavender
 		delete[] indices;
 	}
 
-    void Mesh::Draw()
+    void Mesh::Draw() const
     {
 		// bind buffers
 		((PFNGLBINDVERTEXARRAYPROC)wglGetProcAddress("glBindVertexArray"))(m_Vao);
@@ -104,4 +108,9 @@ namespace Lavender
         // draw mesh
 		((PFNGLDRAWELEMENTSBASEVERTEXPROC)wglGetProcAddress("glDrawElementsBaseVertex"))(GL_TRIANGLES, m_IndexCount, GL_UNSIGNED_INT, 0, 0);
     }
+
+	unsigned int Mesh::GetVbo() const
+	{
+		return m_Vbo;
+	}
 }

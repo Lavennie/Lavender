@@ -3,6 +3,7 @@
 #include "LayerConcept.h"
 #include "LayerReal.h"
 #include "Rendering/Camera.h"
+#include "Rendering/Shader.h"
 #include "Input/Input.h"
 #include "Core.h"
 
@@ -25,7 +26,7 @@ namespace Lavender
 		World(float fov, Vector2 windowSize, float zNear, float);
 
 		void Update();
-		void Render();
+		void Render(const Shader& shader);
 		void UpdateSound();
 
 		Idea& InitIdea();
@@ -34,7 +35,7 @@ namespace Lavender
 		Real& InitRealRoot(const Info& info);
 
 		Camera* GetCamera();
-		const Matrix4& GetProjectionMatrix() const;
+		Matrix4 GetProjectionMatrix() const;
 		void SetProjectionMatrix(float fov, float ar, float zNear, float zFar);
 	};
 }

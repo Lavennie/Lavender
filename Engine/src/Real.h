@@ -2,6 +2,7 @@
 #include <vector>
 #include "Info.h"
 #include "Component.h"
+#include "Math/Matrix4.h"
 
 namespace Lavender
 {
@@ -17,6 +18,16 @@ namespace Lavender
 
 	public:
 		Real(const Info* info);
+
+		Matrix4 GetModelMatrix() const;
+
+		template <class T>
+		const T* GetProperty(Property::Type type) const
+		{
+			const Property* prop = m_Info->GetProperty(type);
+			if (prop == nullptr) { return nullptr; }
+			return (T*)prop->GetValue();
+		}
 	};
 }
 

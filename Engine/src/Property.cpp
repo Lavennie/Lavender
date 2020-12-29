@@ -1,8 +1,25 @@
 #include "Property.h"
+#include <iostream>
 namespace Lavender
 {
-	Property::Property(Type type, void* value) : m_Type(type), m_Value(value) { }
-
+	Property::Property(Type type, PropertyValue* value) : m_Type(type)
+	{
+		switch (type)
+		{
+		case Property::Type::Position:
+		case Property::Type::Scale:
+			m_Value = make_unique<PropertyVector3>(*(PropertyVector3*)value);
+			break;
+		case Property::Type::Rotation:
+			m_Value = make_unique<PropertyRotation>(*(PropertyRotation*)value);
+			break;
+		case Property::Type::Mesh:
+			m_Value = make_unique<PropertyModel>(*(PropertyModel*)value);
+			break;
+		default:
+			break;
+		}
+	}
 	Property::Type Property::GetType() const { return m_Type; }
-	const void* Property::GetValue() const { return &m_Value; }
+	PropertyValue* Property::GetValue() const { return m_Value.get(); }
 }

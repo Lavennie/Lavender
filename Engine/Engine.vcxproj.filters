@@ -25,6 +25,7 @@
     <ClCompile Include="src\SubIdea.cpp" />
     <ClCompile Include="src\LayerConcept.cpp" />
     <ClCompile Include="src\Core.cpp" />
+    <ClCompile Include="src\MeshDatabase.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Rendering\Gl.h" />
@@ -51,5 +52,6 @@
     <ClInclude Include="src\SubIdea.h" />
     <ClInclude Include="src\LayerConcept.h" />
     <ClInclude Include="src\Core.h" />
+    <ClInclude Include="src\MeshDatabase.h" />
   </ItemGroup>
 </Project>

@@ -31,6 +31,6 @@ namespace Lavender
 		void SetUniform(const string name, const Vector3& value) const;
 		void SetUniform(const string name, int value) const;
 		void SetUniform(const string name, unsigned int value) const;
-		void SetUniform(const string name, Matrix4& value) const;
+		void SetUniform(const string name, const Matrix4& value) const;
 	};
 }

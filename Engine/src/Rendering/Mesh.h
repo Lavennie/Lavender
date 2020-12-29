@@ -14,11 +14,14 @@ namespace Lavender
 		unsigned int m_IndexCount;
 	public:
 		Mesh();
+		Mesh(const string& path);
 		~Mesh();
 
 		void InitMesh(size_t vertexCount, const Vertex* vertices, size_t indexCount, const unsigned int* indices, size_t attribCount, const VertexAttribPointer* attribs);
 		void InitMesh(const string& path);
 
-		void Draw();
+		void Draw() const;
+
+		unsigned int GetVbo() const;
 	};
 }

@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Core.cpp" />
+    <ClCompile Include="src\MeshDatabase.cpp" />
     <ClCompile Include="src\Property.cpp" />
     <ClCompile Include="src\Rendering\Camera.cpp" />
     <ClCompile Include="src\Component.cpp" />
@@ -178,6 +179,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Core.h" />
+    <ClInclude Include="src\MeshDatabase.h" />
     <ClInclude Include="src\Property.h" />
     <ClInclude Include="src\Rendering\Camera.h" />
     <ClInclude Include="src\Component.h" />

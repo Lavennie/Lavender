@@ -3,7 +3,7 @@ namespace Lavender
 {
 	Core* Core::instance = nullptr;
 
-	Core::Core() : m_Gl() 
+	Core::Core() : m_Gl(), m_Meshes()
 	{
 		instance = this;
 	}
