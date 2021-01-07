@@ -28,8 +28,9 @@ namespace Lavender
 		void Update();
 		void Render();
 		void UpdateSound();
+		void UpdateColliders();
 
-		Idea& InitIdea();
+		Idea& InitIdea(const Vector3& position = Vector3(0, 0, 0), const Quaternion& rotation = Quaternion(), const Vector3& scale = Vector3(1, 1, 1));
 		SubIdea& InitSubIdea(const Idea& idea);
 		Info& InitInfo(const Idea& idea);
 		Real& InitRealRoot(const Info& info);

@@ -14,7 +14,7 @@ namespace Lavender
 	}
 	Input::~Input()
 	{
-		Log::PrintInfo("Deleted input");
+		Log::Print("Deleted input");
 	}
 
 	void Input::Init(bool visible)

@@ -24,7 +24,7 @@ namespace Lavender
 		{
 			DestroyWindow(m_Hwnd);
 		}
-		Log::PrintInfo("Deleted opengl context and window");
+		Log::Print("Deleted opengl context and window");
 	}
 
 	bool Gl::InitWindow(const char* title, Vector2 windowSize)

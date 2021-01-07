@@ -14,14 +14,14 @@ namespace Lavender
 		ifstream fileVert(vertexSourcePath, ios::in);
 		if (!fileVert.is_open())
 		{
-			Log::PrintError("Failed to open vertex shader at path " + vertexSourcePath);
+			Log::Print("Failed to open vertex shader at path " + vertexSourcePath, Log::Level::LevelError);
 			fileVert.close();
 			return;
 		}
 		ifstream fileFrag(fragmentSourcePath, ios::in);
 		if (!fileFrag.is_open())
 		{
-			Log::PrintError("Failed to open fragment shader at path " + fragmentSourcePath);
+			Log::Print("Failed to open fragment shader at path " + fragmentSourcePath, Log::Level::LevelError);
 			fileVert.close();
 			fileFrag.close();
 			return;
@@ -36,7 +36,7 @@ namespace Lavender
 	Shader::~Shader()
 	{
 		((PFNGLDELETEPROGRAMPROC)wglGetProcAddress("glDeleteProgram"))(m_Id);
-		Log::PrintInfo("Deleted shader program");
+		Log::Print("Deleted shader program");
 	}
 
 	void Shader::InitShader(const string& vertexSource, const string& fragmentSource)
@@ -53,8 +53,8 @@ namespace Lavender
 		{
 			char infoLog[512];
 			((PFNGLGETSHADERINFOLOGPROC)wglGetProcAddress("glGetShaderInfoLog"))(vertexShader, 512, NULL, infoLog);
-			Log::PrintError("ERROR::SHADER::VERTEX::COMPILATION_FAILED");
-			Log::PrintError(infoLog);
+			Log::Print("ERROR::SHADER::VERTEX::COMPILATION_FAILED", Log::Level::LevelError);
+			Log::Print(infoLog, Log::Level::LevelError);
 		}
 
 		// fragment shader
@@ -68,8 +68,8 @@ namespace Lavender
 		{
 			char infoLog[512];
 			((PFNGLGETSHADERINFOLOGPROC)wglGetProcAddress("glGetShaderInfoLog"))(fragmentShader, 512, NULL, infoLog);
-			Log::PrintError("ERROR::SHADER::FRAGMENT::COMPILATION_FAILED");
-			Log::PrintError(infoLog);
+			Log::Print("ERROR::SHADER::FRAGMENT::COMPILATION_FAILED", Log::Level::LevelError);
+			Log::Print(infoLog, Log::Level::LevelError);
 		}
 
 
@@ -85,9 +85,8 @@ namespace Lavender
 		{
 			char infoLog[512];
 			((PFNGLGETPROGRAMINFOLOGPROC)wglGetProcAddress("glGetProgramInfoLog"))(m_Id, 512, NULL, infoLog);
-			Log::PrintError("ERROR::SHADER::LINK_FAILED");
-			Log::PrintError(infoLog);
-			Log::PrintError(infoLog);
+			Log::Print("ERROR::SHADER::LINK_FAILED", Log::Level::LevelError);
+			Log::Print(infoLog, Log::Level::LevelError);
 		}
 
 		((PFNGLDELETESHADERPROC)wglGetProcAddress("glDeleteShader"))(vertexShader);

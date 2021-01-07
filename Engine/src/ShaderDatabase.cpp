@@ -7,11 +7,11 @@ namespace Lavender
 {
 	ShaderDatabase::ShaderDatabase()
 	{
-		Log::PrintInfo("Created Shader Database");
+		Log::Print("Created Shader Database");
 	}
 	ShaderDatabase::~ShaderDatabase()
 	{
-		Log::PrintInfo("Deleted Shader Database");
+		Log::Print("Deleted Shader Database");
 	}
 	ShaderDatabase& ShaderDatabase::Instance() { return Core::GetInstance()->GetShaders(); }
 

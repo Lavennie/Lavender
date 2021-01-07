@@ -22,4 +22,6 @@ namespace Lavender
 		}
 		return nullptr;
 	}
+
+	const Idea* SubIdea::GetIdea() const { return m_Idea; }
 }

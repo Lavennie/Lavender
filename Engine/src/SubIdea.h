@@ -12,5 +12,7 @@ namespace Lavender
 	public:
 		SubIdea(const Idea* idea);
 		const Property* GetProperty(Property::Type type) const override;
+
+		const Idea* GetIdea() const;
 	};
 }

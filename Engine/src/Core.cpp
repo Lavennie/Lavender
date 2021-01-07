@@ -3,7 +3,7 @@ namespace Lavender
 {
 	Core* Core::instance = nullptr;
 
-	Core::Core() : m_Gl(), m_Meshes()
+	Core::Core() : m_Gl(), m_Meshes(), m_Shaders(), m_Collisions()
 	{
 		instance = this;
 	}
@@ -24,5 +24,9 @@ namespace Lavender
 	ShaderDatabase& Core::GetShaders()
 	{
 		return m_Shaders;
+	}
+	CollisionList& Core::GetCollisions()
+	{
+		return m_Collisions;
 	}
 }

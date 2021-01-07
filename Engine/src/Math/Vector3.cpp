@@ -18,12 +18,17 @@ namespace Lavender
 	}
 	Vector3& Vector3::Normalize()
 	{
-		float xyzSquared = x * x + y * y + z * z;
+		float length = Length();
 
-		x /= xyzSquared;
-		y /= xyzSquared;
-		z /= xyzSquared;
+		x /= length;
+		y /= length;
+		z /= length;
 		return *this;
+	}
+	Vector3 Vector3::Normalized() const
+	{
+		float length = Length();
+		return Vector3(x / length, y / length, z / length);
 	}
 	float Vector3::Dot(const Vector3& vec) const
 	{

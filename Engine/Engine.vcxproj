@@ -151,6 +151,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Collision\CollisionList.cpp" />
+    <ClCompile Include="src\Collision\Collision.cpp" />
+    <ClCompile Include="src\Collision\ColliderPoint.cpp" />
+    <ClCompile Include="src\Collision\ColliderSphere.cpp" />
+    <ClCompile Include="src\Collision\Collider.cpp" />
     <ClCompile Include="src\Core.cpp" />
     <ClCompile Include="src\MeshDatabase.cpp" />
     <ClCompile Include="src\Property.cpp" />
@@ -179,6 +184,11 @@
     <ClCompile Include="src\SubIdea.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Collision\CollisionList.h" />
+    <ClInclude Include="src\Collision\Collision.h" />
+    <ClInclude Include="src\Collision\ColliderPoint.h" />
+    <ClInclude Include="src\Collision\ColliderSphere.h" />
+    <ClInclude Include="src\Collision\Collider.h" />
     <ClInclude Include="src\Core.h" />
     <ClInclude Include="src\MeshDatabase.h" />
     <ClInclude Include="src\Property.h" />

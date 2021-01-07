@@ -7,11 +7,11 @@ namespace Lavender
 {
 	MeshDatabase::MeshDatabase()
 	{
-		Log::PrintInfo("Created Mesh Database");
+		Log::Print("Created Mesh Database");
 	}
 	MeshDatabase::~MeshDatabase()
 	{
-		Log::PrintInfo("Deleted Mesh Database");
+		Log::Print("Deleted Mesh Database");
 	}
 
 	MeshDatabase& MeshDatabase::Instance()

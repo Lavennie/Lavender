@@ -12,6 +12,7 @@ namespace Lavender
 		void Set(float x, float y, float z);
 		float Length() const;
 		Vector3& Normalize();
+		Vector3 Normalized() const;
 		float Dot(const Vector3& vec) const;
 		Vector3 Cross(const Vector3& vec) const;
 

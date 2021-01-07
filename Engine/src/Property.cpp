@@ -21,7 +21,7 @@ namespace Lavender
 			m_Value = make_unique<PropertyShading>(*(PropertyShading*)value);
 			break;
 		default:
-			Log::PrintError("Property constructor does not support given Property::Type");
+			Log::Print("Property constructor does not support given Property::Type", Log::Level::LevelError);
 			break;
 		}
 	}

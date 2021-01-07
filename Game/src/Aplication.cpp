@@ -9,6 +9,7 @@
 #include "Rendering/Mesh.h"
 #include "Rendering/Shader.h"
 #include "Rendering/VertexAttribPointer.h"
+#include "Collision/Collision.h"
 
 using namespace Lavender;
 
@@ -47,23 +48,23 @@ int main()
 		Mesh* cube = MeshDatabase::LoadMesh(filePath + "Models/test.sm", false);
 		Shader* shader = ShaderDatabase::LoadShader(filePath + "Shaders/vertex.vs", filePath + "Shaders/fragment.fs");
 
-		Idea& floorIdea = world.InitIdea();
-		floorIdea.AddProperty<PropertyVector3, PropertyVector3>(Property::Type::Position, Vector3(0, -3, 0));
-		floorIdea.AddProperty<PropertyVector3, PropertyVector3>(Property::Type::Scale, Vector3(10, 0.1f, 10));
+		Idea& floorIdea = world.InitIdea(Vector3(0, -3, 0), Quaternion(), Vector3(10, 0.1f, 10));
 		floorIdea.AddProperty<PropertyModel, PropertyModel>(Property::Type::Mesh, cube);
-
 		floorIdea.AddProperty<PropertyShading, PropertyShading>(Property::Type::Shader, shader);
 		Info& floorInfo = world.InitInfo(floorIdea);
 		Real& floorReal = world.InitRealRoot(floorInfo);
 
-		Idea& cubeIdea = world.InitIdea();
-		cubeIdea.AddProperty<PropertyVector3, PropertyVector3>(Property::Type::Position, Vector3(0, 0, 3));
-		cubeIdea.AddProperty<PropertyRotation, PropertyRotation>(Property::Type::Rotation, Quaternion(45, 45, 45));
+		Idea& cubeIdea = world.InitIdea(Vector3(0, 0, 3), Quaternion(45, 45, 45));
 		cubeIdea.AddProperty<PropertyModel, PropertyModel>(Property::Type::Mesh, cube);
 		cubeIdea.AddProperty<PropertyShading, PropertyShading>(Property::Type::Shader, shader);
 		Info& cubeInfo = world.InitInfo(cubeIdea);
 		Real& cubeReal = world.InitRealRoot(cubeInfo);
+		cubeReal.AddCollider(Vector3(0, 0, 0), 1.0f);
 	}
+	Idea& playerIdea = world.InitIdea();
+	Info& playerInfo = world.InitInfo(playerIdea);
+	Real& playerReal = world.InitRealRoot(playerInfo);
+	playerReal.AddCollider(Vector3(0, 0, 0));
 		
 
 	MSG msg;
@@ -77,17 +78,21 @@ int main()
 		}
 		else
 		{
+			// mouse input
 			gl->GetInput()->UpdateMouse();
+
+			// colliders
+			world.UpdateColliders();
 
 			// update
 			world.Update();
+			playerIdea.SetPosition(world.GetCamera()->position);
 
 			// render
 			gl->Clear();
 			gl->ClearColor(bgColor);
-			world.Render();
 
-			//cube->Draw();
+			world.Render();
 
 			gl->SwapBuffer();
 

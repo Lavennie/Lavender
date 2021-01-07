@@ -72,7 +72,7 @@ namespace Lavender
 		virtual unsigned int GetComponentCount() const = 0;
 	};
 
-	struct PropertyVector3 final : public PropertyValue
+	struct PropertyVector3 : public PropertyValue
 	{
 	private:
 		PropertyFloat m_X;
@@ -80,11 +80,11 @@ namespace Lavender
 		PropertyFloat m_Z;
 	public:
 		PropertyVector3(const Vector3& position) : m_X(position.x), m_Y(position.y), m_Z(position.z) {}
-		PropertyComponent* GetComponent(unsigned int index) const override { return (PropertyComponent*)(&m_X + index); }
-		unsigned int GetComponentCount() const override { return 3; }
+		virtual PropertyComponent* GetComponent(unsigned int index) const override { return (PropertyComponent*)(&m_X + index); }
+		virtual unsigned int GetComponentCount() const override { return 3; }
 		Vector3 GetValue() const { return Vector3(m_X.Get(), m_Y.Get(), m_Z.Get()); }
 	};
-	struct PropertyRotation final : public PropertyValue
+	struct PropertyRotation : public PropertyValue
 	{
 	private:
 		PropertyFloat m_X;
@@ -93,28 +93,28 @@ namespace Lavender
 		PropertyFloat m_W;
 	public:
 		PropertyRotation(const Quaternion& rotation) : m_X(rotation.v.x), m_Y(rotation.v.y), m_Z(rotation.v.z), m_W(rotation.w) {}
-		PropertyComponent* GetComponent(unsigned int index) const override { return (PropertyComponent*)(&m_X + index); }
-		unsigned int GetComponentCount() const override { return 4; }
+		virtual PropertyComponent* GetComponent(unsigned int index) const override { return (PropertyComponent*)(&m_X + index); }
+		virtual unsigned int GetComponentCount() const override { return 4; }
 		Quaternion GetValue() const { return Quaternion(m_X.Get(), m_Y.Get(), m_Z.Get(), m_W.Get()); }
 	};
-	struct PropertyModel final : public PropertyValue
+	struct PropertyModel : public PropertyValue
 	{
 	private:
 		PropertyMesh m_Mesh;
 	public:
 		PropertyModel(Mesh* mesh) : m_Mesh(mesh) { }
-		PropertyComponent* GetComponent(unsigned int index) const override { return (PropertyComponent*)&m_Mesh; }
-		unsigned int GetComponentCount() const override { return 1; }
+		virtual PropertyComponent* GetComponent(unsigned int index) const override { return (PropertyComponent*)&m_Mesh; }
+		virtual unsigned int GetComponentCount() const override { return 1; }
 		const Mesh* GetValue() const { return m_Mesh.Get(); }
 	};
-	struct PropertyShading final : public PropertyValue
+	struct PropertyShading : public PropertyValue
 	{
 	private:
 		PropertyShader m_Shader;
 	public:
 		PropertyShading(Shader* shader) : m_Shader(shader) {}
-		PropertyComponent* GetComponent(unsigned int index) const override { return (PropertyComponent*)&m_Shader; }
-		unsigned int GetComponentCount() const override { return 1; }
+		virtual PropertyComponent* GetComponent(unsigned int index) const override { return (PropertyComponent*)&m_Shader; }
+		virtual unsigned int GetComponentCount() const override { return 1; }
 		const Shader* GetValue() const { return m_Shader.Get(); }
 	};
 #pragma endregion

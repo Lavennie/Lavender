@@ -3,6 +3,9 @@
 #include "Info.h"
 #include "Component.h"
 #include "Math/Matrix4.h"
+#include "Collision/Collider.h"
+#include "Collision/ColliderPoint.h"
+#include "Collision/ColliderSphere.h"
 
 namespace Lavender
 {
@@ -13,13 +16,19 @@ namespace Lavender
 	{
 	private:
 		const Info* m_Info;
-		vector<shared_ptr<Real>> m_Children;
-		vector<shared_ptr<Component>> m_Components;
+		vector<unique_ptr<Collider>> m_Colliders;
 
 	public:
 		Real(const Info* info);
 
 		Matrix4 GetModelMatrix() const;
+
+		const Collider* GetCollider(unsigned int colliderIndex) const;
+		const ColliderPoint* AddCollider(const Vector3& center);
+		const ColliderSphere* AddCollider(const Vector3& center, float radius);
+
+		const Info* GetInfo() const;
+		const Idea* GetIdea() const;
 
 		template <class T>
 		const T* GetProperty(Property::Type type) const

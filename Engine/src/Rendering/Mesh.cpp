@@ -19,7 +19,7 @@ namespace Lavender
 
 		if (!file.is_open())
 		{
-			Log::PrintError("Failed to open mesh at path " + path);
+			Log::Print("Failed to open mesh at path " + path, Log::Level::LevelError);
 			file.close();
 			return;
 		}
@@ -69,7 +69,7 @@ namespace Lavender
 		((PFNGLDELETEVERTEXARRAYSPROC)wglGetProcAddress("glDeleteVertexArrays"))(1, &m_Vao);
 		((PFNGLDELETEBUFFERSPROC)wglGetProcAddress("glDeleteBuffers"))(1, &m_Vbo);
 		((PFNGLDELETEBUFFERSPROC)wglGetProcAddress("glDeleteBuffers"))(1, &m_Ibo);
-		Log::PrintInfo("Deleted mesh");
+		Log::Print("Deleted mesh");
 	}
 
 	void Mesh::InitMesh(size_t vertexCount, const Vertex* vertices, size_t indexCount, const unsigned int* indices, size_t attribCount, const VertexAttribPointer* attribs)

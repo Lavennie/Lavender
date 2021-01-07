@@ -27,6 +27,11 @@
     <ClCompile Include="src\Core.cpp" />
     <ClCompile Include="src\MeshDatabase.cpp" />
     <ClCompile Include="src\ShaderDatabase.cpp" />
+    <ClCompile Include="src\Collision\Collider.cpp" />
+    <ClCompile Include="src\Collision\ColliderPoint.cpp" />
+    <ClCompile Include="src\Collision\ColliderSphere.cpp" />
+    <ClCompile Include="src\Collision\Collision.cpp" />
+    <ClCompile Include="src\Collision\CollisionList.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Rendering\Gl.h" />
@@ -55,5 +60,10 @@
     <ClInclude Include="src\Core.h" />
     <ClInclude Include="src\MeshDatabase.h" />
     <ClInclude Include="src\ShaderDatabase.h" />
+    <ClInclude Include="src\Collision\Collider.h" />
+    <ClInclude Include="src\Collision\ColliderPoint.h" />
+    <ClInclude Include="src\Collision\ColliderSphere.h" />
+    <ClInclude Include="src\Collision\Collision.h" />
+    <ClInclude Include="src\Collision\CollisionList.h" />
   </ItemGroup>
 </Project>
