@@ -44,7 +44,7 @@ int main()
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	World world(70, monitorSize, 0.1f, 100);
-	{
+
 		Mesh* cube = MeshDatabase::LoadMesh(filePath + "Models/test.sm", false);
 		Shader* shader = ShaderDatabase::LoadShader(filePath + "Shaders/vertex.vs", filePath + "Shaders/fragment.fs");
 
@@ -60,7 +60,8 @@ int main()
 		Info& cubeInfo = world.InitInfo(cubeIdea);
 		Real& cubeReal = world.InitRealRoot(cubeInfo);
 		cubeReal.AddCollider(Vector3(0, 0, 0), 1.0f);
-	}
+
+
 	Idea& playerIdea = world.InitIdea();
 	Info& playerInfo = world.InitInfo(playerIdea);
 	Real& playerReal = world.InitRealRoot(playerInfo);

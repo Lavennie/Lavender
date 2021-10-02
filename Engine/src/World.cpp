@@ -66,19 +66,24 @@ namespace Lavender
 	}
 	void World::UpdateColliders()
 	{
-		CollisionList::ClearCollisions();
+		// first mark all collisions as eligible to be removed from list
+		// now if no collision is marked, the list will be cleared
+		Core::GetInstance()->GetCollisions().CollisionsMarkForClear();
+		// check collisions between objects, mark those that are colliding
+		// they can be marked as ENTER or STAY
 		for (unsigned int i = 0; i < m_RealLayer.GetRootCount(); i++)
 		{
 			Real* r1 = m_RealLayer.GetRootAt(i);
 			for (unsigned int j = i + 1; j < m_RealLayer.GetRootCount(); j++)
 			{
 				Real* r2 = m_RealLayer.GetRootAt(j);
-				if (CollisionList::TryRegisterCollision(*r1, *r2))
-				{
-					cout << "collision" << endl;
-				}
+				Core::GetInstance()->GetCollisions().TryRegisterCollision(*r1, *r2);
 			}
 		}
+		// mark collisions that were previously marked STAY but weren't detected now as EXIT
+		Core::GetInstance()->GetCollisions().CollisionsMarkExiting();
+		// clear all collisions that weren't marked this iteration
+		Core::GetInstance()->GetCollisions().ClearInvalidCollisions();
 	}
 
 	Idea& World::InitIdea(const Vector3& position, const Quaternion& rotation, const Vector3& scale)
