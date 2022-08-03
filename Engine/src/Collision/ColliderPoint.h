@@ -12,5 +12,7 @@ namespace Lavender
 	public:
 		ColliderPoint(Vector3 center);
 		const Vector3& GetCenter() const;
+
+		Collider::Type GetType() const override;
 	};
 }

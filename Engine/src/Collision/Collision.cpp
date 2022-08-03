@@ -9,32 +9,33 @@ namespace Lavender
 
 	Collision Collision::TestForCollision(const Real* r1, const Real* r2)
 	{
-		if (dynamic_cast<const ColliderSphere*>(r1->GetCollider(0)) != nullptr)
+		if (r1->GetCollider(0) != nullptr && r2->GetCollider(0) != nullptr)
 		{
-			if (dynamic_cast<const ColliderSphere*>(r2->GetCollider(0)) != nullptr)
+			if (r1->GetCollider(0)->GetType() == Collider::Type::Sphere)
 			{
-				return TestForCollision<ColliderSphere, ColliderSphere>(r1, 0, (const ColliderSphere*)r1->GetCollider(0), r2, 0, (const ColliderSphere*)r2->GetCollider(0));
+				if (r2->GetCollider(0)->GetType() == Collider::Type::Sphere)
+				{
+					return TestForCollision<ColliderSphere, ColliderSphere>(r1, 0, (const ColliderSphere*)r1->GetCollider(0), r2, 0, (const ColliderSphere*)r2->GetCollider(0));
+				}
+				else if (r2->GetCollider(0)->GetType() == Collider::Type::Point)
+				{
+					return TestForCollision<ColliderSphere, ColliderPoint>(r1, 0, (const ColliderSphere*)r1->GetCollider(0), r2, 0, (const ColliderSphere*)r2->GetCollider(0));
+				}
 			}
-			else if (dynamic_cast<const ColliderPoint*>(r2->GetCollider(0)) != nullptr)
+			else if (r1->GetCollider(0)->GetType() == Collider::Type::Point)
 			{
-				return TestForCollision<ColliderSphere, ColliderPoint>(r1, 0, (const ColliderSphere*)r1->GetCollider(0), r2, 0, (const ColliderPoint*)r2->GetCollider(0));
+				if (r2->GetCollider(0)->GetType() == Collider::Type::Sphere)
+				{
+					return TestForCollision<ColliderPoint, ColliderSphere>(r1, 0, (const ColliderSphere*)r1->GetCollider(0), r2, 0, (const ColliderSphere*)r2->GetCollider(0));
+				}
+				else if (r2->GetCollider(0)->GetType() == Collider::Type::Point)
+				{
+					return TestForCollision<ColliderPoint, ColliderPoint>(r1, 0, (const ColliderSphere*)r1->GetCollider(0), r2, 0, (const ColliderSphere*)r2->GetCollider(0));
+				}
 			}
 		}
-		else if (dynamic_cast<const ColliderPoint*>(r1->GetCollider(0)) != nullptr)
-		{
-			if (dynamic_cast<const ColliderSphere*>(r2->GetCollider(0)) != nullptr)
-			{
-				return TestForCollision<ColliderPoint, ColliderSphere>(r1, 0, (const ColliderPoint*)r1->GetCollider(0), r2, 0, (const ColliderSphere*)r2->GetCollider(0));
-			}
-			else if (dynamic_cast<const ColliderPoint*>(r2->GetCollider(0)) != nullptr)
-			{
-				return TestForCollision<ColliderPoint, ColliderPoint>(r1, 0, (const ColliderPoint*)r1->GetCollider(0), r2, 0, (const ColliderPoint*)r2->GetCollider(0));
-			}
-		}
-		else
-		{
-			return Collision();
-		}
+		return Collision();
+		
 	}
 	template <>
 	Collision Collision::TestForCollision<ColliderPoint, ColliderPoint>(const Real* r1, unsigned char i1, const ColliderPoint* c1, const Real* r2, unsigned char i2, const ColliderPoint* c2)

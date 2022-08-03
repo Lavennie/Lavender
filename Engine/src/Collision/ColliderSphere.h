@@ -11,6 +11,8 @@ namespace Lavender
 	public:
 		ColliderSphere(Vector3 center, float radius);
 		float GetRadius() const;
+
+		Collider::Type GetType() const override;
 	};
 }
 
