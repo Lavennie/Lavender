@@ -67,7 +67,7 @@ int main()
 	Real& playerReal = world.InitRealRoot(playerInfo);
 	playerReal.AddCollider(Vector3(0, 0, 0));
 		
-
+	// main loop
 	MSG msg;
 	PeekMessage(&msg, NULL, 0, 0, PM_REMOVE);
 	while (msg.message != WM_QUIT)
