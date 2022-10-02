@@ -2,6 +2,7 @@
 #include <string>
 #include "Vertex.h"
 #include "Rendering/VertexAttribPointer.h"
+#include "Logging/Logging.h"
 
 using namespace std;
 
@@ -9,7 +10,7 @@ namespace Lavender
 {
 	class Mesh
 	{
-	private:
+	public:
 		unsigned int m_Vao, m_Vbo, m_Ibo;
 		unsigned int m_IndexCount;
 
@@ -21,6 +22,7 @@ namespace Lavender
 		/// </summary>
 		/// <param name="path">Path to mesh</param>
 		Mesh(const string& path);
+		Mesh(Mesh&& source);
 		~Mesh();
 
 		void InitMesh(size_t vertexCount, const Vertex* vertices, size_t indexCount, const unsigned int* indices, size_t attribCount, const VertexAttribPointer* attribs);

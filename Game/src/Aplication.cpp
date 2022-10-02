@@ -45,21 +45,32 @@ int main()
 
 	World world(70, monitorSize, 0.1f, 100);
 
-		Mesh* cube = MeshDatabase::LoadMesh(filePath + "Models/test.sm", false);
-		Shader* shader = ShaderDatabase::LoadShader(filePath + "Shaders/vertex.vs", filePath + "Shaders/fragment.fs");
+	MeshDatabase::LoadMesh(filePath + "Models/cube.sm", false);
+	MeshDatabase::LoadMesh(filePath + "Models/pyramide.sm", false);
+	Mesh* pyramide = MeshDatabase::GetMesh(filePath + "Models/pyramide.sm");
+	Mesh* cube = MeshDatabase::GetMesh(filePath + "Models/cube.sm");
 
-		Idea& floorIdea = world.InitIdea(Vector3(0, -3, 0), Quaternion(), Vector3(10, 0.1f, 10));
-		floorIdea.AddProperty<PropertyModel, PropertyModel>(Property::Type::Mesh, cube);
-		floorIdea.AddProperty<PropertyShading, PropertyShading>(Property::Type::Shader, shader);
-		Info& floorInfo = world.InitInfo(floorIdea);
-		Real& floorReal = world.InitRealRoot(floorInfo);
+	Shader* shader = ShaderDatabase::LoadShader(filePath + "Shaders/vertex.vs", filePath + "Shaders/fragment.fs");
 
-		Idea& cubeIdea = world.InitIdea(Vector3(0, 0, 3), Quaternion(45, 45, 45));
-		cubeIdea.AddProperty<PropertyModel, PropertyModel>(Property::Type::Mesh, cube);
-		cubeIdea.AddProperty<PropertyShading, PropertyShading>(Property::Type::Shader, shader);
-		Info& cubeInfo = world.InitInfo(cubeIdea);
-		Real& cubeReal = world.InitRealRoot(cubeInfo);
-		cubeReal.AddCollider(Vector3(0, 0, 0), 1.0f);
+	Idea& floorIdea = world.InitIdea(Vector3(0, -3, 0), Quaternion(), Vector3(10, 0.1f, 10));
+	floorIdea.AddProperty<PropertyModel, PropertyModel>(Property::Type::Mesh, cube);
+	floorIdea.AddProperty<PropertyShading, PropertyShading>(Property::Type::Shader, shader);
+	Info& floorInfo = world.InitInfo(floorIdea);
+	Real& floorReal = world.InitRealRoot(floorInfo);
+
+	Idea& pyramideIdea = world.InitIdea(Vector3(0, 0, 3), Quaternion());
+	pyramideIdea.AddProperty<PropertyModel, PropertyModel>(Property::Type::Mesh, pyramide);
+	pyramideIdea.AddProperty<PropertyShading, PropertyShading>(Property::Type::Shader, shader);
+	Info& pyramideInfo = world.InitInfo(pyramideIdea);
+	Real& pyramideReal = world.InitRealRoot(pyramideInfo);
+	pyramideReal.AddCollider(Vector3(0, 0, 0), 1.0f);
+
+	Idea& cubeIdea = world.InitIdea(Vector3(2, 0, 3), Quaternion());
+	cubeIdea.AddProperty<PropertyModel, PropertyModel>(Property::Type::Mesh, cube);
+	cubeIdea.AddProperty<PropertyShading, PropertyShading>(Property::Type::Shader, shader);
+	Info& cubeInfo = world.InitInfo(cubeIdea);
+	Real& cubeReal = world.InitRealRoot(cubeInfo);
+	cubeReal.AddCollider(Vector3(0, 0, 0), 1.0f);
 
 
 	Idea& playerIdea = world.InitIdea();

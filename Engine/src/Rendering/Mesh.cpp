@@ -15,6 +15,12 @@ namespace Lavender
 	Mesh::Mesh() : m_Vao(0), m_Vbo(0), m_Ibo(0), m_IndexCount(0) {}
 	Mesh::Mesh(const string& path) : Mesh()
 	{
+		/*MESH FORMAT
+		* vertex count (uint64)
+		* vertices: position (vec3 float4), tex coord (vec2 float4), normal (vec3 float4)
+		* index count (uint64)
+		* indices: uint32
+		*/
 		ifstream file(path, ios::binary | ios::in);
 
 		if (!file.is_open())
@@ -39,6 +45,8 @@ namespace Lavender
 			file.read((char*)&vertices[i].normal.x, 4);
 			file.read((char*)&vertices[i].normal.y, 4);
 			file.read((char*)&vertices[i].normal.z, 4);
+
+			Log::Print(vertices[i].position);
 		}
 
 		UINT64 indexCount;
@@ -56,7 +64,7 @@ namespace Lavender
 		{
 			VertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, position)),
 			VertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, texCoord)),
-			VertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, normal))
+			VertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, normal))
 		};
 
 		InitMesh((size_t)vertexCount, vertices, (size_t)indexCount, indices, 3, attribs);
@@ -64,12 +72,19 @@ namespace Lavender
 		delete[] vertices;
 		delete[] indices;
 	}
+	Mesh::Mesh(Mesh&& source) : m_Vao{ source.m_Vao }, m_Vbo{ source.m_Vbo }, m_Ibo{ source.m_Ibo }, m_IndexCount{ source.m_IndexCount }
+	{
+		source.m_Vbo = 0;
+	}
 	Mesh::~Mesh()
 	{
-		((PFNGLDELETEVERTEXARRAYSPROC)wglGetProcAddress("glDeleteVertexArrays"))(1, &m_Vao);
-		((PFNGLDELETEBUFFERSPROC)wglGetProcAddress("glDeleteBuffers"))(1, &m_Vbo);
-		((PFNGLDELETEBUFFERSPROC)wglGetProcAddress("glDeleteBuffers"))(1, &m_Ibo);
-		Log::Print("Deleted mesh");
+		if (m_Vbo != 0)
+		{
+			((PFNGLDELETEVERTEXARRAYSPROC)wglGetProcAddress("glDeleteVertexArrays"))(1, &m_Vao);
+			((PFNGLDELETEBUFFERSPROC)wglGetProcAddress("glDeleteBuffers"))(1, &m_Vbo);
+			((PFNGLDELETEBUFFERSPROC)wglGetProcAddress("glDeleteBuffers"))(1, &m_Ibo);
+			Log::Print("Deleted mesh");
+		}
 	}
 
 	void Mesh::InitMesh(size_t vertexCount, const Vertex* vertices, size_t indexCount, const unsigned int* indices, size_t attribCount, const VertexAttribPointer* attribs)
@@ -90,12 +105,11 @@ namespace Lavender
 
 		for (size_t i = 0; i < attribCount; i++)
 		{
-			((PFNGLENABLEVERTEXATTRIBARRAYPROC)wglGetProcAddress("glEnableVertexAttribArray"))(i);
+			((PFNGLENABLEVERTEXATTRIBARRAYPROC)wglGetProcAddress("glEnableVertexAttribArray"))(attribs[i].index);
 			((PFNGLVERTEXATTRIBPOINTERPROC)wglGetProcAddress("glVertexAttribPointer"))
 				(attribs[i].index, attribs[i].size, attribs[i].type, attribs[i].normalized, attribs[i].stride, attribs[i].offset);
 		}
 	}
-	
 
     void Mesh::Draw() const
     {
@@ -103,7 +117,7 @@ namespace Lavender
 		((PFNGLBINDVERTEXARRAYPROC)wglGetProcAddress("glBindVertexArray"))(m_Vao);
 		((PFNGLBINDBUFFERPROC)wglGetProcAddress("glBindBuffer"))(GL_ARRAY_BUFFER, m_Vbo);
 		((PFNGLBINDBUFFERPROC)wglGetProcAddress("glBindBuffer"))(GL_ELEMENT_ARRAY_BUFFER, m_Ibo);
-        // draw mesh
+		// draw mesh
 		((PFNGLDRAWELEMENTSBASEVERTEXPROC)wglGetProcAddress("glDrawElementsBaseVertex"))(GL_TRIANGLES, m_IndexCount, GL_UNSIGNED_INT, 0, 0);
     }
 
